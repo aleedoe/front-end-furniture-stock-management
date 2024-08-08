@@ -6,7 +6,7 @@ export async function handleLogin(
     username: string,
     password: string,
     setError: React.Dispatch<React.SetStateAction<string>>,
-    router: NextRouter
+    router: any
 ) {
     event.preventDefault();
 
