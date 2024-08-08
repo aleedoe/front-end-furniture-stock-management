@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { NextRouter } from 'next/router';
+import { axiosInstance } from "@/lib/axios";
 import Cookies from 'js-cookie'
 
 // Use client-side cookies management, such as js-cookie
@@ -14,7 +13,7 @@ export async function handleLogin(
     event.preventDefault();
 
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/admin-login/', {
+        const response = await axiosInstance.post('/login', {
             username,
             password,
         });
