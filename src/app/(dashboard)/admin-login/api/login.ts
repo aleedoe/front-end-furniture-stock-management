@@ -13,7 +13,7 @@ export async function handleLogin(
     event.preventDefault();
 
     try {
-        const response = await axiosInstance.post('/login', {
+        const response = await axiosInstance.post('/admin-login/', {
             username,
             password,
         });
