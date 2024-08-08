@@ -1,5 +1,8 @@
-import { axiosInstance } from "@/lib/axios";
+import axios from 'axios';
 import { NextRouter } from 'next/router';
+import Cookies from 'js-cookie'
+
+// Use client-side cookies management, such as js-cookie
 
 export async function handleLogin(
     event: React.FormEvent<HTMLFormElement>,
@@ -11,12 +14,13 @@ export async function handleLogin(
     event.preventDefault();
 
     try {
-        const response = await axiosInstance.post('/admin-login/', {
+        const response = await axios.post('http://127.0.0.1:8000/api/admin-login/', {
             username,
             password,
         });
 
         // Assuming the token or user data is returned on successful login
+        Cookies.set("data", JSON.stringify(response.data), { expires: 1 }); // Store in cookies for 1 day
         console.log('Login successful:', response.data);
         // Redirect to another page, e.g., dashboard
         router.push('/workspace/administrator');
