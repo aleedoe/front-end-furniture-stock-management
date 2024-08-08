@@ -11,7 +11,7 @@ export async function handleLogin(
     event.preventDefault();
 
     try {
-        const response = await axiosInstance.post('/login', {
+        const response = await axiosInstance.post('/admin-login/', {
             username,
             password,
         });
@@ -19,7 +19,7 @@ export async function handleLogin(
         // Assuming the token or user data is returned on successful login
         console.log('Login successful:', response.data);
         // Redirect to another page, e.g., dashboard
-        router.push('/dashboard');
+        router.push('/workspace/administrator');
     } catch (error) {
         console.error('Login failed:', error);
         setError('Login failed. Please check your credentials and try again.');
