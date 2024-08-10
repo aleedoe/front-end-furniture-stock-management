@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { handleLogin } from './actions/auth';
 
 export default function PageLogin() {
     const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
@@ -25,7 +26,7 @@ export default function PageLogin() {
         // Example of handling login (assuming handleLogin is an async function)
         try {
             // Uncomment the line below and import handleLogin properly
-            // await handleLogin(username, password);
+            await handleLogin(username, password);
             // Redirect or handle successful login here
             // router.push('/some-page');
         } catch (error) {

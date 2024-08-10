@@ -10,6 +10,8 @@ export async function handleLogin(
             username,
             password,
         });
+        // console.log('data in auth:', { username, password });
+        
 
         // Assuming the token or user data is returned on successful login
         console.log('Login successful:', response.data);
