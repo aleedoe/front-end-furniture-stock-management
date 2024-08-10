@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { handleLogin } from './api/login';
+import { handleLogin } from './actions/auth';
 
 export default function PageLogin() {
     const [username, setUsername] = useState('');
