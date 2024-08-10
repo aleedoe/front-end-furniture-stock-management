@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { handleLogin } from './actions/auth';
+import { handleLogin } from './api/actions/auth';
 
 export default function PageLogin() {
     const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
