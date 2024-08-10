@@ -1,9 +1,6 @@
 "use client"
 
-import { useState } from 'react';
-import Link from "next/link";
-import { useRouter } from 'next/navigation';
-
+import { FormEvent } from 'react';
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -14,13 +11,28 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { handleLogin } from './actions/auth';
 
 export default function PageLogin() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const router = useRouter();
+    const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const username = formData.get('username') as string;
+        const password = formData.get('password') as string;
+
+        console.log('data', { username, password });
+
+        // Example of handling login (assuming handleLogin is an async function)
+        try {
+            // Uncomment the line below and import handleLogin properly
+            // await handleLogin(username, password);
+            // Redirect or handle successful login here
+            // router.push('/some-page');
+        } catch (error) {
+            // Handle login error here
+            console.error('Login failed', error);
+        }
+    }
 
     return (
         <div className="flex w-screen h-screen items-center justify-center">
@@ -32,15 +44,14 @@ export default function PageLogin() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={(event) => handleLogin(event, username, password, setError, router)} className="grid gap-4">
+                    <form onSubmit={handleSubmitForm} className="grid gap-4">
                         <div className="grid gap-2">
                             <Label htmlFor="username">Username</Label>
                             <Input
                                 id="username"
+                                name="username" // Ensure the name attribute is set
                                 type="text"
                                 placeholder="username or email"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
                         </div>
@@ -48,14 +59,12 @@ export default function PageLogin() {
                             <Label htmlFor="password">Password</Label>
                             <Input
                                 id="password"
+                                name="password" // Ensure the name attribute is set
                                 type="password"
                                 placeholder="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
                         </div>
-                        {error && <p className="text-red-500">{error}</p>}
                         <Button type="submit" className="w-full">
                             Login
                         </Button>
