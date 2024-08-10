@@ -1,4 +1,7 @@
+"use server";
+
 import { axiosInstance } from "@/lib/axios";
+import { cookies } from "next/headers";
 
 export async function handleLogin(
     username: string,
@@ -10,12 +13,11 @@ export async function handleLogin(
             username,
             password,
         });
-        // console.log('data in auth:', { username, password });
         
 
+        cookies().set("session", JSON.stringify(response.data));
         // Assuming the token or user data is returned on successful login
         console.log('Login successful:', response.data);
-        // Redirect to another page, e.g., dashboard
         // router.push('/workspace/administrator');
     } catch (error) {
         console.error('Login failed:', error);
