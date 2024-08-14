@@ -64,7 +64,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                                 {openSidebar && <span className="transition-opacity duration-300">Dashboard</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        {!openSidebar && <TooltipContent side="right" sideOffset={5}>Dashboard</TooltipContent>}
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={5}>Dashboard</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                                 <TooltipProvider>
@@ -75,7 +75,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                                 {openSidebar && <span className="transition-opacity duration-300">Orders</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        {!openSidebar && <TooltipContent side="right" sideOffset={5}>Orders</TooltipContent>}
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={5}>Orders</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                                 <TooltipProvider>
@@ -86,7 +86,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                                 {openSidebar && <span className="transition-opacity duration-300">Products</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        {!openSidebar && <TooltipContent side="right" sideOffset={5}>Products</TooltipContent>}
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={5}>Products</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                                 <TooltipProvider>
@@ -97,7 +97,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                                 {openSidebar && <span className="transition-opacity duration-300">Customers</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        {!openSidebar && <TooltipContent side="right" sideOffset={5}>Customers</TooltipContent>}
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={5}>Customers</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                                 <TooltipProvider>
@@ -108,7 +108,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                                 {openSidebar && <span className="transition-opacity duration-300">Analytics</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        {!openSidebar && <TooltipContent side="right" sideOffset={5}>Analytics</TooltipContent>}
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={5}>Analytics</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                             </nav>
