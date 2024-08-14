@@ -36,12 +36,11 @@ export default function FormHandler() {
     });
 
     const handleSubmitForm = async (data: z.infer<typeof LoginFormSchema>) => {
-        console.log('data', data);
 
         try {
             const res = await handleLogin(data.username, data.password);
             
-            if (res === 200) {
+            if (res.status === 'success') {
                 console.log('Login successful');
             }
 

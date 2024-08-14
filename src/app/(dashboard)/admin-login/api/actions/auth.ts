@@ -20,7 +20,7 @@ export async function handleLogin(
 
         console.log('Login successful:', response.data);
 
-        return response.status
+        return response.data
         
     } catch (error: any) {
         console.error('Login failed:', error.response.data);
