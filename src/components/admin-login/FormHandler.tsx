@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+
 
 // Schema for form validation using Zod
 const LoginFormSchema = z.object({
@@ -30,7 +32,9 @@ const LoginFormSchema = z.object({
 export default function FormHandler() {
 
     const router = useRouter();
-    
+
+    const { toast } = useToast();
+
     const form = useForm<z.infer<typeof LoginFormSchema>>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
@@ -43,9 +47,15 @@ export default function FormHandler() {
 
         try {
             const res = await handleLogin(data.username, data.password);
-            
+
             if (res.status === 'success') {
                 console.log('Login successful');
+
+                toast({
+                    title: "Login successful!",
+                    description: "anda akan segera diarahkan ke halaman administrator.",
+                });
+
                 router.push("/workspace/administrator");
             }
 
