@@ -93,10 +93,10 @@ export default function FormHandler() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full">
-                    Login
+                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                    {form.formState.isSubmitting ? "Loading..." : "Login"}
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" disabled={form.formState.isSubmitting}>
                     Login with Google
                 </Button>
             </form>
