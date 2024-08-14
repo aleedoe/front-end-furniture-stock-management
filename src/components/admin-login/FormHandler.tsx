@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
+import { useRouter } from "next/navigation";
 
 // Schema for form validation using Zod
 const LoginFormSchema = z.object({
@@ -27,6 +28,9 @@ const LoginFormSchema = z.object({
 });
 
 export default function FormHandler() {
+
+    const router = useRouter();
+    
     const form = useForm<z.infer<typeof LoginFormSchema>>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
@@ -42,6 +46,7 @@ export default function FormHandler() {
             
             if (res.status === 'success') {
                 console.log('Login successful');
+                router.push("/workspace/administrator");
             }
 
             if (res.status === 'error') {
