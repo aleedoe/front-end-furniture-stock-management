@@ -45,7 +45,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
     return (
         <>
-            <div className={`grid min-h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[220px_1fr] lg:grid-cols-[70px_1fr]'}`}>
+            <div className={`grid min-h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[70px_1fr] lg:grid-cols-[70px_1fr]'}`}>
                 <div className={`hidden border-r bg-muted/40 md:block transition-all duration-300`}>
                     <div className="flex h-full max-h-screen flex-col gap-2">
                         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -64,7 +64,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                                 {openSidebar && <span className="transition-opacity duration-300">Dashboard</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={5}>Dashboard</TooltipContent>
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={15}>Dashboard</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                                 <TooltipProvider>
