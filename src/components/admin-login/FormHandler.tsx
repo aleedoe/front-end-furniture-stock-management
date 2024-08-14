@@ -16,7 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
 
-// Schema untuk form validation menggunakan Zod
+// Schema for form validation using Zod
 const LoginFormSchema = z.object({
     username: z.string().min(2, {
         message: "Username must be at least 2 characters.",
@@ -39,9 +39,27 @@ export default function FormHandler() {
         console.log('data', data);
 
         try {
-            await handleLogin(data.username, data.password);
-            // Redirect or handle successful login here
-            // router.push('/some-page');
+            const res = await handleLogin(data.username, data.password);
+            
+            if (res === 200) {
+                console.log('Login successful');
+            }
+
+            if (res.status === 'error') {
+                console.log('Login failed');
+                if (res.message === "Username not found.") {
+                    form.setError("username", {
+                        type: "manual",
+                        message: res.message,
+                    });
+                } else if (res.message === "Invalid password.") {
+                    form.setError("password", {
+                        type: "manual",
+                        message: res.message,
+                    });
+                }
+            }
+
         } catch (error) {
             console.error('Login failed', error);
         }
