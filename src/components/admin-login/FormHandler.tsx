@@ -1,0 +1,92 @@
+"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
+
+// Schema untuk form validation menggunakan Zod
+const LoginFormSchema = z.object({
+    username: z.string().min(2, {
+        message: "Username must be at least 2 characters.",
+    }),
+    password: z.string().min(2, {
+        message: "Password must be at least 2 characters.",
+    }),
+});
+
+export default function FormHandler() {
+    const form = useForm<z.infer<typeof LoginFormSchema>>({
+        resolver: zodResolver(LoginFormSchema),
+        defaultValues: {
+            username: "",
+            password: "",
+        },
+    });
+
+    const handleSubmitForm = async (data: z.infer<typeof LoginFormSchema>) => {
+        console.log('data', data);
+
+        try {
+            await handleLogin(data.username, data.password);
+            // Redirect or handle successful login here
+            // router.push('/some-page');
+        } catch (error) {
+            console.error('Login failed', error);
+        }
+    }
+
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmitForm)} className="grid gap-4">
+                <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Username</FormLabel>
+                            <FormControl>
+                                <Input placeholder="username or email" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                This is your public display name.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input type="password" placeholder="password" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit" className="w-full">
+                    Login
+                </Button>
+                <Button variant="outline" className="w-full">
+                    Login with Google
+                </Button>
+            </form>
+        </Form>
+    );
+}
