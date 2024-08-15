@@ -32,6 +32,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+
+import { HiOutlineHome } from "react-icons/hi2";
+import { LuShoppingCart } from "react-icons/lu";
+import { LuUsers } from "react-icons/lu";
+import { LuPackage } from "react-icons/lu";
+import { FaChartLine } from "react-icons/fa6";
+import { FaRegChartBar } from "react-icons/fa6";
+import { PiNotepad } from "react-icons/pi";
+import { TbCategory } from "react-icons/tb";
+
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useState } from "react"
@@ -60,7 +70,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                     <Tooltip delayDuration={0}>
                                         <TooltipTrigger asChild>
                                             <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                                <Home className="h-4 w-4" />
+                                                <HiOutlineHome size={20} />
                                                 {openSidebar && <span className="transition-opacity duration-300">Dashboard</span>}
                                             </Link>
                                         </TooltipTrigger>
@@ -71,7 +81,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                     <Tooltip delayDuration={0}>
                                         <TooltipTrigger asChild>
                                             <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                                <ShoppingCart className="h-4 w-4" />
+                                                <LuShoppingCart size={20} />
                                                 {openSidebar && <span className="transition-opacity duration-300">Orders</span>}
                                             </Link>
                                         </TooltipTrigger>
@@ -81,34 +91,45 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                 <TooltipProvider>
                                     <Tooltip delayDuration={0}>
                                         <TooltipTrigger asChild>
-                                            <Link href="#" className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary">
-                                                <Package className="h-4 w-4" />
-                                                {openSidebar && <span className="transition-opacity duration-300">Products</span>}
+                                            <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                                                <PiNotepad size={20} />
+                                                {openSidebar && <span className="transition-opacity duration-300">Transactions</span>}
                                             </Link>
                                         </TooltipTrigger>
-                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={18}>Products</TooltipContent>
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={18}>Transactions</TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                                <TooltipProvider>
+                                    <Tooltip delayDuration={0}>
+                                        <TooltipTrigger asChild>
+                                            <Link href="#" className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary">
+                                                <LuPackage size={20} />
+                                                {openSidebar && <span className="transition-opacity duration-300">Items</span>}
+                                            </Link>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={18}>Items</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                                 <TooltipProvider>
                                     <Tooltip delayDuration={0}>
                                         <TooltipTrigger asChild>
                                             <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                                <Users className="h-4 w-4" />
+                                                <TbCategory size={20} />
+                                                {openSidebar && <span className="transition-opacity duration-300">Category</span>}
+                                            </Link>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={18}>Category</TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                                <TooltipProvider>
+                                    <Tooltip delayDuration={0}>
+                                        <TooltipTrigger asChild>
+                                            <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                                                <LuUsers size={20}/>
                                                 {openSidebar && <span className="transition-opacity duration-300">Customers</span>}
                                             </Link>
                                         </TooltipTrigger>
                                         <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={18}>Customers</TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                                <TooltipProvider>
-                                    <Tooltip delayDuration={0}>
-                                        <TooltipTrigger asChild>
-                                            <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                                <LineChart className="h-4 w-4" />
-                                                {openSidebar && <span className="transition-opacity duration-300">Analytics</span>}
-                                            </Link>
-                                        </TooltipTrigger>
-                                        <TooltipContent side="right" className={openSidebar ? "hidden" : undefined} sideOffset={18}>Analytics</TooltipContent>
                                     </Tooltip>
                                 </TooltipProvider>
                             </nav>
