@@ -2,28 +2,14 @@
 
 import Link from "next/link"
 import {
-    Bell,
     CircleUser,
-    Home,
-    LineChart,
     LogOut,
     Menu,
-    Package,
     Package2,
     Search,
-    ShoppingCart,
-    Users,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -33,12 +19,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { HiOutlineHome } from "react-icons/hi2";
 import { LuShoppingCart } from "react-icons/lu";
 import { LuUsers } from "react-icons/lu";
 import { LuPackage } from "react-icons/lu";
-import { FaChartLine } from "react-icons/fa6";
-import { FaRegChartBar } from "react-icons/fa6";
+import { AiOutlineHome } from "react-icons/ai";
 import { PiNotepad } from "react-icons/pi";
 import { TbCategory } from "react-icons/tb";
 
@@ -55,7 +39,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
     return (
         <>
-            <div className={`grid min-h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[70px_1fr] lg:grid-cols-[70px_1fr]'}`}>
+            <div className={`grid min-h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[75px_1fr] lg:grid-cols-[75px_1fr]'}`}>
                 <div className={`hidden border-r bg-muted/40 md:block transition-all duration-300`}>
                     <div className="flex h-full max-h-screen flex-col gap-2">
                         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -70,7 +54,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                     <Tooltip delayDuration={0}>
                                         <TooltipTrigger asChild>
                                             <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                                <HiOutlineHome size={20} />
+                                                <AiOutlineHome size={20} />
                                                 {openSidebar && <span className="transition-opacity duration-300">Dashboard</span>}
                                             </Link>
                                         </TooltipTrigger>
@@ -125,7 +109,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                     <Tooltip delayDuration={0}>
                                         <TooltipTrigger asChild>
                                             <Link href="#" className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                                                <LuUsers size={20}/>
+                                                <LuUsers size={20} />
                                                 {openSidebar && <span className="transition-opacity duration-300">Customers</span>}
                                             </Link>
                                         </TooltipTrigger>
@@ -168,39 +152,43 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                                         href="#"
                                         className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                                     >
-                                        <Home className="h-5 w-5" />
+                                        <AiOutlineHome size={20} />
                                         Dashboard
                                     </Link>
                                     <Link
                                         href="#"
                                         className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
                                     >
-                                        <ShoppingCart className="h-5 w-5" />
+                                        <LuShoppingCart size={20} />
                                         Orders
-                                        <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                                            6
-                                        </Badge>
                                     </Link>
                                     <Link
                                         href="#"
                                         className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                                     >
-                                        <Package className="h-5 w-5" />
-                                        Products
+                                        <PiNotepad size={20} />
+                                        Transactions
                                     </Link>
                                     <Link
                                         href="#"
                                         className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                                     >
-                                        <Users className="h-5 w-5" />
+                                        <LuPackage size={20} />
+                                        Items
+                                    </Link>
+                                    <Link
+                                        href="#"
+                                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    >
+                                        <TbCategory size={20} />
+                                        Category
+                                    </Link>
+                                    <Link
+                                        href="#"
+                                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    >
+                                        <LuUsers size={20} />
                                         Customers
-                                    </Link>
-                                    <Link
-                                        href="#"
-                                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                                    >
-                                        <LineChart className="h-5 w-5" />
-                                        Analytics
                                     </Link>
                                 </nav>
                                 <div className="mt-auto">
