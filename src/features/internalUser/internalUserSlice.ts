@@ -31,7 +31,7 @@ const initialState: UserState = {
 }
 
 // Create a slice of the Redux store for user data
-const userSlice = createSlice({
+const internalUserSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -52,7 +52,7 @@ const userSlice = createSlice({
 })
 
 // Export the actions created by the slice
-export const { saveUserData, saveTokens, clearUserData } = userSlice.actions
+export const { saveUserData, saveTokens, clearUserData } = internalUserSlice.actions
 
 // Export the reducer to be used in the store
-export default userSlice.reducer
+export default internalUserSlice.reducer
