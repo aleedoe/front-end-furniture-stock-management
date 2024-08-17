@@ -19,15 +19,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { LuShoppingCart } from "react-icons/lu";
-import { LuUsers } from "react-icons/lu";
-import { LuPackage } from "react-icons/lu";
-import { AiOutlineHome } from "react-icons/ai";
-import { PiNotepad } from "react-icons/pi";
-import { TbCategory } from "react-icons/tb";
-
 import { Input } from "@/components/ui/input"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useState } from "react"
 import { NavbarDestopTablet, NavbarMobile } from "@/components/workspace/Navbar"
 
