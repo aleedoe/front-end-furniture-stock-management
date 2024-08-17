@@ -21,17 +21,29 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 
-interface NavItemDesTab {
+interface NavItem {
     href: string;
     icon: React.ReactNode;
     label: string;
 }
 
-interface NavItemMob {
-    href: string;
-    icon: React.ReactNode;
-    label: string;
-}
+const navItems: NavItem[] = [
+    { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
+    { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
+    { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
+    { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
+    { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
+    { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
+];
+
+const navItemsWarehouser: NavItem[] = [
+    { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
+    { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
+    { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
+    { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
+    { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
+    { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
+];
 
 export const NavbarDestopTablet = ({
     openSidebar,
@@ -42,15 +54,7 @@ export const NavbarDestopTablet = ({
     activeItem: string;
     onSetActiveItem: (label: string) => void;
 }) => {
-    const navItems: NavItemDesTab[] = [
-        { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
-        { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
-        { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
-        { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
-        { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
-        { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
-    ];
-
+    
     const handleClick = (label: string) => {
         onSetActiveItem(label);
     };
@@ -108,14 +112,6 @@ export const NavbarMobile = ({
     activeItem: string;
     onSetActiveItem: (label: string) => void;
 }) => {
-    const navItems: NavItemMob[] = [
-        { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
-        { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
-        { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
-        { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
-        { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
-        { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
-    ];
 
     const handleClick = (label: string) => {
         onSetActiveItem(label);
