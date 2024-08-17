@@ -1,11 +1,8 @@
 "use client"
 
-import Link from "next/link"
 import {
     CircleUser,
-    LogOut,
     Menu,
-    Package2,
     Search,
 } from "lucide-react"
 
@@ -27,15 +24,26 @@ import { NavbarDestopTablet, NavbarMobile } from "@/components/workspace/Navbar"
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
 
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
-    // console.log(openSidebar);
+    const [activeItem, setActiveItem] = useState<string>('Dashboard');
+
+    const handleSetActiveItem = (label: string) => {
+        setActiveItem(label);
+    };
 
     return (
         <>
             <div className={`grid min-h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[75px_1fr] lg:grid-cols-[75px_1fr]'}`}>
-                <NavbarDestopTablet openSidebar={openSidebar} />
+                <NavbarDestopTablet
+                    openSidebar={openSidebar}
+                    activeItem={activeItem}
+                    onSetActiveItem={handleSetActiveItem}
+                />
                 <div className="flex flex-col">
                     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-                        <NavbarMobile />
+                        <NavbarMobile
+                            activeItem={activeItem}
+                            onSetActiveItem={handleSetActiveItem}
+                        />
                         <Button
                             variant="outline"
                             size="icon"

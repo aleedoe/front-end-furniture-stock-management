@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import Link from "next/link"
 import {
     LogOut,
@@ -33,9 +33,15 @@ interface NavItemMob {
     label: string;
 }
 
-export const NavbarDestopTablet = ({ openSidebar }: { openSidebar: boolean }) => {
-    const [activeItem, setActiveItem] = useState<string>('Dashboard');
-
+export const NavbarDestopTablet = ({
+    openSidebar,
+    activeItem,
+    onSetActiveItem
+}: {
+    openSidebar: boolean;
+    activeItem: string;
+    onSetActiveItem: (label: string) => void;
+}) => {
     const navItems: NavItemDesTab[] = [
         { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
         { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
@@ -46,7 +52,7 @@ export const NavbarDestopTablet = ({ openSidebar }: { openSidebar: boolean }) =>
     ];
 
     const handleClick = (label: string) => {
-        setActiveItem(label);
+        onSetActiveItem(label);
     };
 
     return (
@@ -95,9 +101,13 @@ export const NavbarDestopTablet = ({ openSidebar }: { openSidebar: boolean }) =>
 
 
 
-export const NavbarMobile = () => {
-    const [activeItem, setActiveItem] = useState<string>('Dashboard');
-
+export const NavbarMobile = ({
+    activeItem,
+    onSetActiveItem
+}: {
+    activeItem: string;
+    onSetActiveItem: (label: string) => void;
+}) => {
     const navItems: NavItemMob[] = [
         { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
         { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
@@ -108,7 +118,7 @@ export const NavbarMobile = () => {
     ];
 
     const handleClick = (label: string) => {
-        setActiveItem(label);
+        onSetActiveItem(label);
     };
 
     return (
