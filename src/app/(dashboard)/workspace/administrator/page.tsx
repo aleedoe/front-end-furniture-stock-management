@@ -4,17 +4,12 @@ import StoreProvider from '@/app/StoreProvider'
 import { Button } from '@/components/ui/button'
 import { decrement, increment, initializeCount } from '@/features/counter/counterSlice'
 import { RootState } from '@/lib/store'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const HomePage = () => {
     const dispatch = useDispatch()
     const count = useSelector((state: RootState) => state.counter.value)
-
-    // Initialize the count with a specific value
-    useEffect(() => {
-        dispatch(initializeCount(10)) // Initialize the counter with 10
-    }, [dispatch])
 
     return (
         <div>
