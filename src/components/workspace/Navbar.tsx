@@ -27,6 +27,11 @@ interface NavItemDesTab {
     label: string;
 }
 
+interface NavItemMob {
+    href: string;
+    icon: React.ReactNode;
+    label: string;
+}
 
 export const NavbarDestopTablet = ({ openSidebar }: { openSidebar: boolean }) => {
     const [activeItem, setActiveItem] = useState<string>('Dashboard');
@@ -91,69 +96,47 @@ export const NavbarDestopTablet = ({ openSidebar }: { openSidebar: boolean }) =>
 
 
 export const NavbarMobile = () => {
+    const [activeItem, setActiveItem] = useState<string>('Dashboard');
+
+    const navItems: NavItemMob[] = [
+        { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
+        { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
+        { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
+        { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
+        { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
+        { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
+    ];
+
+    const handleClick = (label: string) => {
+        setActiveItem(label);
+    };
+
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="shrink-0 md:hidden"
-                >
+                <Button variant="outline" size="icon" className="shrink-0 md:hidden">
                     <Menu className="h-5 w-5" />
                     <span className="sr-only">Toggle navigation menu</span>
                 </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
                 <nav className="grid gap-2 text-lg font-medium">
-                    <Link
-                        href="#"
-                        className="flex items-center gap-2 text-lg font-semibold"
-                    >
+                    <Link href="#" className="flex items-center gap-2 text-lg font-semibold">
                         <Package2 className="h-6 w-6" />
                         <span className="sr-only">Acme Inc</span>
                     </Link>
-                    <Link
-                        href="#"
-                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                        <AiOutlineHome size={20} />
-                        Dashboard
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-                    >
-                        <LuShoppingCart size={20} />
-                        Orders
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                        <PiNotepad size={20} />
-                        Transactions
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                        <LuPackage size={20} />
-                        Items
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                        <TbCategory size={20} />
-                        Category
-                    </Link>
-                    <Link
-                        href="#"
-                        className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                        <LuUsers size={20} />
-                        Customers
-                    </Link>
+                    {navItems.map(({ href, icon, label }) => (
+                        <Link
+                            key={label}
+                            href={href}
+                            onClick={() => handleClick(label)}
+                            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 ${activeItem === label ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
+                                }`}
+                        >
+                            {icon}
+                            {label}
+                        </Link>
+                    ))}
                 </nav>
                 <div className="mt-auto">
                     <Button size="sm" className="w-full justify-between">
@@ -163,5 +146,5 @@ export const NavbarMobile = () => {
                 </div>
             </SheetContent>
         </Sheet>
-    )
-}
+    );
+};
