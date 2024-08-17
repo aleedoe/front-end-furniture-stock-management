@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useDispatch } from 'react-redux'
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { saveTokens, saveUserData } from "@/features/internalUser/internalUserSlice";
 
 
 // Schema for form validation using Zod
@@ -32,6 +34,7 @@ const LoginFormSchema = z.object({
 export default function FormHandler() {
 
     const router = useRouter();
+    const dispatch = useDispatch()
 
     const { toast } = useToast();
 
@@ -50,6 +53,22 @@ export default function FormHandler() {
 
             if (res.status === 'success') {
                 console.log('Login successful');
+
+                // Simpan data user
+                dispatch(saveUserData({
+                    id: res.data.id,
+                    name: res.data.name,
+                    phone: res.data.phone,
+                    email: res.data.email,
+                    password: res.data.password,
+                    access_rights: { id: res.data.access_rights.id, name: res.data.access_rights.name }
+                }))
+
+                // Simpan token
+                dispatch(saveTokens({
+                    refresh: res.tokens.refresh,
+                    access: res.tokens.access
+                }))
 
                 toast({
                     title: "Login successful!",
