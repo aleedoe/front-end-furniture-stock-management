@@ -12,8 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { handleLogin } from './api/actions/auth';
+import { useRouter } from 'next/navigation';
 
 export default function PageLogin() {
+
+    const router = useRouter();
     const handleSubmitForm = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -26,7 +29,7 @@ export default function PageLogin() {
         // Example of handling login (assuming handleLogin is an async function)
         try {
             // Uncomment the line below and import handleLogin properly
-            await handleLogin(username, password);
+            const rest = await handleLogin(username, password);
             // Redirect or handle successful login here
             // router.push('/some-page');
         } catch (error) {
