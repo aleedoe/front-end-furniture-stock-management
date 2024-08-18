@@ -30,6 +30,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useRouter } from 'next/navigation'
 
 
 
@@ -67,10 +68,15 @@ export const NavbarDestopTablet = ({
 }) => {
 
     const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
-
+    const router = useRouter();
+    
     const handleClick = (label: string) => {
         onSetActiveItem(label);
     };
+
+    const handleLogout = () => {
+        router.push('/admin-login');
+    }
 
     return (
         <div className="hidden border-r bg-muted/40 md:block transition-all duration-300">
@@ -122,7 +128,7 @@ export const NavbarDestopTablet = ({
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction>Logout</AlertDialogAction>
+                                <AlertDialogAction onClick={() => handleLogout()} >Logout</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
