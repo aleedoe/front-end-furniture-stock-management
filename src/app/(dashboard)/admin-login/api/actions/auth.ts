@@ -1,7 +1,7 @@
 "use server";
 
 import { axiosInstance } from "@/lib/axios";
-import { decrypt, encrypt } from "@/lib/data-encript";
+import { encrypt } from "@/lib/data-encript";
 import { cookies } from "next/headers";
 
 export async function handleLogin(
@@ -27,13 +27,4 @@ export async function handleLogin(
         // Return the error message
         return error.response.data;
     }
-}
-
-export async function getSessionData() {
-    const encryptedData = cookies().get("session");
-    if (encryptedData) {
-        const decryptedData = decrypt(encryptedData.value);
-        return JSON.parse(decryptedData);
-    }
-    return null;
 }

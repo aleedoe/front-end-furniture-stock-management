@@ -17,14 +17,25 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { NavbarDestopTablet, NavbarMobile } from "@/components/workspace/Navbar"
+import { getSessionData } from "@/lib/get-session"
 
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
 
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
     const [activeItem, setActiveItem] = useState<string>('Dashboard');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getSessionData();
+            console.log('ini datanya: ', data);
+        };
+
+        fetchData();
+    }, []);
+    
 
     const handleSetActiveItem = (label: string) => {
         setActiveItem(label);
