@@ -27,7 +27,7 @@ interface NavItem {
     label: string;
 }
 
-const navItems: NavItem[] = [
+const navItemsAdministrator: NavItem[] = [
     { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
     { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
     { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
@@ -38,22 +38,23 @@ const navItems: NavItem[] = [
 
 const navItemsWarehouser: NavItem[] = [
     { href: '#', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
-    { href: '#', icon: <LuShoppingCart size={20} />, label: 'Orders' },
-    { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
     { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
     { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
-    { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
 ];
 
 export const NavbarDestopTablet = ({
     openSidebar,
     activeItem,
+    role,
     onSetActiveItem
 }: {
     openSidebar: boolean;
     activeItem: string;
+    role: string;
     onSetActiveItem: (label: string) => void;
 }) => {
+    
+    const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
     
     const handleClick = (label: string) => {
         onSetActiveItem(label);
@@ -107,12 +108,16 @@ export const NavbarDestopTablet = ({
 
 export const NavbarMobile = ({
     activeItem,
+    role,
     onSetActiveItem
 }: {
     activeItem: string;
+    role: string;
     onSetActiveItem: (label: string) => void;
 }) => {
 
+    const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
+    
     const handleClick = (label: string) => {
         onSetActiveItem(label);
     };

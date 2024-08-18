@@ -26,11 +26,18 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
     const [activeItem, setActiveItem] = useState<string>('Dashboard');
+    const [userRole, setUserRole] = useState<string>('');
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await getSessionData();
-            console.log('ini datanya: ', data);
+
+            if (data.status === 'success' && data.data && data.data.access_rights) {
+                setUserRole(data.data.access_rights.name);
+            } else {
+                console.error('Failed to retrieve user role');
+            }
+
         };
 
         fetchData();
@@ -47,12 +54,14 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                 <NavbarDestopTablet
                     openSidebar={openSidebar}
                     activeItem={activeItem}
+                    role={userRole}
                     onSetActiveItem={handleSetActiveItem}
                 />
                 <div className="flex flex-col">
                     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
                         <NavbarMobile
                             activeItem={activeItem}
+                            role={userRole}
                             onSetActiveItem={handleSetActiveItem}
                         />
                         <Button
