@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 
 // Schema for form validation using Zod
@@ -35,6 +36,8 @@ export default function FormHandler() {
 
     const { toast } = useToast();
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     const form = useForm<z.infer<typeof LoginFormSchema>>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
@@ -46,6 +49,9 @@ export default function FormHandler() {
     const handleSubmitForm = async (data: z.infer<typeof LoginFormSchema>) => {
 
         try {
+
+            setLoading(true);
+            
             const res = await handleLogin(data.username, data.password);
 
             if (res.status === 'success') {
@@ -76,6 +82,9 @@ export default function FormHandler() {
 
         } catch (error) {
             console.error('Login failed', error);
+
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -108,11 +117,8 @@ export default function FormHandler() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                    {form.formState.isSubmitting ? "Loading..." : "Login"}
-                </Button>
-                <Button variant="outline" className="w-full" disabled={form.formState.isSubmitting}>
-                    Login with Google
+                <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? "Loading..." : "Login"}
                 </Button>
             </form>
         </Form>
