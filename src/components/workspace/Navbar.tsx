@@ -19,6 +19,18 @@ import { TbCategory } from "react-icons/tb";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 
 interface NavItem {
@@ -53,9 +65,9 @@ export const NavbarDestopTablet = ({
     role: string;
     onSetActiveItem: (label: string) => void;
 }) => {
-    
+
     const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
-    
+
     const handleClick = (label: string) => {
         onSetActiveItem(label);
     };
@@ -94,10 +106,28 @@ export const NavbarDestopTablet = ({
                     </nav>
                 </div>
                 <div className="mt-auto p-4">
-                    <Button size="sm" className="w-full justify-between">
-                        {openSidebar && <span>LogOut</span>}
-                        <LogOut className="h-4 w-4" />
-                    </Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button size="sm" className="w-full justify-between">
+                                {openSidebar && <span>LogOut</span>}
+                                <LogOut className="h-4 w-4" />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your
+                                    account and remove your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+
                 </div>
             </div>
         </div>
@@ -117,7 +147,7 @@ export const NavbarMobile = ({
 }) => {
 
     const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
-    
+
     const handleClick = (label: string) => {
         onSetActiveItem(label);
     };
@@ -150,10 +180,27 @@ export const NavbarMobile = ({
                     ))}
                 </nav>
                 <div className="mt-auto">
-                    <Button size="sm" className="w-full justify-between">
-                        LogOut
-                        <LogOut />
-                    </Button>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button size="sm" className="w-full justify-between">
+                                LogOut
+                                <LogOut />
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your
+                                    account and remove your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </div>
             </SheetContent>
         </Sheet>

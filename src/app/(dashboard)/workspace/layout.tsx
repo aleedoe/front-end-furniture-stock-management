@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
 import { NavbarDestopTablet, NavbarMobile } from "@/components/workspace/Navbar"
-import { getSessionData } from "@/lib/get-session"
+import { getSessionData } from "@/lib/session"
 
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
