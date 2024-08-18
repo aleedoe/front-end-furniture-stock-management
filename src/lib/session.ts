@@ -11,3 +11,7 @@ export async function getSessionData() {
     }
     return null;
 }
+
+export async function deleteSessionData() {
+    cookies().delete("session");
+}

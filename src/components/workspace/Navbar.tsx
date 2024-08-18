@@ -31,6 +31,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useRouter } from 'next/navigation'
+import { deleteSessionData } from '@/lib/session'
 
 
 
@@ -74,7 +75,8 @@ export const NavbarDestopTablet = ({
         onSetActiveItem(label);
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await deleteSessionData();
         router.push('/admin-login');
     }
 
