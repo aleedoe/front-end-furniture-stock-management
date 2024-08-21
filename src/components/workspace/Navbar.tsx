@@ -47,7 +47,7 @@ const navItemsAdministrator: NavItem[] = [
     { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
     { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
     { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
-    { href: '#', icon: <LuUsers size={20} />, label: 'Customers' },
+    { href: '#', icon: <LuUsers size={20} />, label: 'Users' },
 ];
 
 const navItemsWarehouser: NavItem[] = [
