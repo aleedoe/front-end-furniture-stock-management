@@ -60,17 +60,19 @@ export const NavbarDestopTablet = ({
     openSidebar,
     activeItem,
     role,
-    onSetActiveItem
+    onSetActiveItem,
+    loadingNav,
 }: {
     openSidebar: boolean;
     activeItem: string;
     role: string;
     onSetActiveItem: (label: string) => void;
+    loadingNav: boolean;
 }) => {
 
     const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
     const router = useRouter();
-    
+
     const handleClick = (label: string) => {
         onSetActiveItem(label);
     };
@@ -91,7 +93,34 @@ export const NavbarDestopTablet = ({
                 </div>
                 <div className="flex-1">
                     <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-                        {navItems.map(({ href, icon, label }) => (
+                        {loadingNav ? (
+                            <div className='flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all'>
+                                Loading...
+                            </div>
+                        ) : (
+                            navItems.map(({ href, icon, label }) => (
+                                <TooltipProvider key={label}>
+                                    <Tooltip delayDuration={0}>
+                                        <TooltipTrigger asChild>
+                                            <Link
+                                                href={href}
+                                                onClick={() => handleClick(label)}
+                                                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${activeItem === label ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                                    } transition-all`}
+                                            >
+                                                {icon}
+                                                {openSidebar && <span className="transition-opacity duration-300">{label}</span>}
+                                            </Link>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right" className={openSidebar ? 'hidden' : undefined} sideOffset={18}>
+                                            {label}
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            ))
+                        )}
+
+                        {/* {navItems.map(({ href, icon, label }) => (
                             <TooltipProvider key={label}>
                                 <Tooltip delayDuration={0}>
                                     <TooltipTrigger asChild>
@@ -110,7 +139,7 @@ export const NavbarDestopTablet = ({
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
-                        ))}
+                        ))} */}
                     </nav>
                 </div>
                 <div className="mt-auto p-4">

@@ -27,6 +27,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
     const [activeItem, setActiveItem] = useState<string>('Dashboard');
     const [userRole, setUserRole] = useState<string>('');
+    const [loadingNavbar, setLoadingNavbar] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,6 +35,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
             if (data.status === 'success' && data.data && data.data.access_rights) {
                 setUserRole(data.data.access_rights.name);
+                setLoadingNavbar(false);
             } else {
                 console.error('Failed to retrieve user role');
             }
@@ -41,7 +43,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
         };
 
         fetchData();
-    }, []);
+    }, [userRole]);
     
 
     const handleSetActiveItem = (label: string) => {
@@ -56,6 +58,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                     activeItem={activeItem}
                     role={userRole}
                     onSetActiveItem={handleSetActiveItem}
+                    loadingNav={loadingNavbar}
                 />
                 <div className="flex flex-col">
                     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
