@@ -62,7 +62,10 @@ export default function FormHandler() {
                     description: "anda akan segera diarahkan ke halaman administrator.",
                 });
 
-                router.push("/workspace/administrator");
+                if (res.data.access_rights.name === "administrator") {
+                    router.push("/workspace/administrator");
+                } else {
+                    router.push("/workspace/warehouser");}
             }
 
             if (res.status === 'error') {
