@@ -16,6 +16,9 @@ export async function handleLogin(
 
         // Encrypt data before storing it in a cookie
         const encryptedData = encrypt(JSON.stringify(response.data));
+        console.log('data asli:', response.data);
+        
+        cookies().set("access-rights", response.data.data.access_rights.name);
         cookies().set("session", encryptedData);
 
         console.log('Login successful:', response.data);

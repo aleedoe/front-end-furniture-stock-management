@@ -14,4 +14,5 @@ export async function getSessionData() {
 
 export async function deleteSessionData() {
     cookies().delete("session");
+    cookies().delete("access-rights");
 }
