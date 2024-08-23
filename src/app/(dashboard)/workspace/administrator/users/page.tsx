@@ -5,7 +5,7 @@ import React from 'react'
 const userPage = () => {
     return (
         <>
-            <ScrollArea className="h-72">
+            <ScrollArea className="h-80">
                 <MainTable  />
             </ScrollArea>
         </>
