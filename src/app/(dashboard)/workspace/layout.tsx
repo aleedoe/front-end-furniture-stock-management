@@ -107,11 +107,13 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                         </DropdownMenu>
                     </header>
                     <main className="flex flex-1 flex-col gap-4 lg:gap-6">
-                        <ScrollArea className="h-[calc(100vh-6vh)] lg:h-[calc(98vh-50px)] p-4  lg:p-6">
-                            <div className="flex items-center">
-                                <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
+                        <ScrollArea className="h-[calc(100vh-6vh)] lg:h-[calc(98vh-50px)]">
+                            <div className="p-4 lg:p-6">
+                                <div className="flex items-center">
+                                    <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
+                                </div>
+                                {children}
                             </div>
-                            {children}
                         </ScrollArea>
                     </main>
                 </div>
