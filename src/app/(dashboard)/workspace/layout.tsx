@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
 import { NavbarDestopTablet, NavbarMobile } from "@/components/workspace/Navbar"
 import { getSessionData } from "@/lib/session"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
@@ -52,7 +53,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
     return (
         <>
-            <div className={`grid min-h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[75px_1fr] lg:grid-cols-[75px_1fr]'}`}>
+            <div className={`grid h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[75px_1fr] lg:grid-cols-[75px_1fr]'}`}>
                 <NavbarDestopTablet
                     openSidebar={openSidebar}
                     activeItem={activeItem}
@@ -105,11 +106,13 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </header>
-                    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-                        <div className="flex items-center">
-                            <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
-                        </div>
-                        {children}
+                    <main className="flex flex-1 flex-col gap-4 lg:gap-6">
+                        <ScrollArea className="h-[calc(100vh-6vh)] lg:h-[calc(98vh-50px)] p-4  lg:p-6">
+                            <div className="flex items-center">
+                                <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
+                            </div>
+                            {children}
+                        </ScrollArea>
                     </main>
                 </div>
             </div>
