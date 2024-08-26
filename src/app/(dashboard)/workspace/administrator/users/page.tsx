@@ -85,12 +85,9 @@ const userPage = () => {
                 <Tabs defaultValue="all">
                     <div className="flex items-center">
                         <TabsList>
-                            <TabsTrigger value="all">All</TabsTrigger>
-                            <TabsTrigger value="active">Active</TabsTrigger>
-                            <TabsTrigger value="draft">Draft</TabsTrigger>
-                            <TabsTrigger value="archived" className="hidden sm:flex">
-                                Archived
-                            </TabsTrigger>
+                            <TabsTrigger value="all">Administrator</TabsTrigger>
+                            <TabsTrigger value="active">Warehouser</TabsTrigger>
+                            <TabsTrigger value="draft">Reseller</TabsTrigger>
                         </TabsList>
                         <div className="ml-auto flex items-center gap-2">
                             <DropdownMenu>
