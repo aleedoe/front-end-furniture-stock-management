@@ -81,7 +81,7 @@ const orderPage = () => {
             <div className="flex items-center">
                 <h1 className="text-lg font-semibold md:text-2xl">Orders</h1>
             </div>
-            <div className='h-[1000px] mt-2'>
+            <div className='mt-2'>
                 <Tabs defaultValue="all">
                     <div className="flex items-center">
                         <TabsList>
