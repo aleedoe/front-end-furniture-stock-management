@@ -119,27 +119,6 @@ export const NavbarDestopTablet = ({
                                 </TooltipProvider>
                             ))
                         )}
-
-                        {/* {navItems.map(({ href, icon, label }) => (
-                            <TooltipProvider key={label}>
-                                <Tooltip delayDuration={0}>
-                                    <TooltipTrigger asChild>
-                                        <Link
-                                            href={href}
-                                            onClick={() => handleClick(label)}
-                                            className={`flex items-center gap-3 rounded-lg px-3 py-2 ${activeItem === label ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                                } transition-all`}
-                                        >
-                                            {icon}
-                                            {openSidebar && <span className="transition-opacity duration-300">{label}</span>}
-                                        </Link>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="right" className={openSidebar ? 'hidden' : undefined} sideOffset={18}>
-                                        {label}
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        ))} */}
                     </nav>
                 </div>
                 <div className="mt-auto p-4">
