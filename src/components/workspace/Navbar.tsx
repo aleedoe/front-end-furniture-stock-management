@@ -30,7 +30,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { deleteSessionData } from '@/lib/session'
 
 
@@ -58,23 +58,20 @@ const navItemsWarehouser: NavItem[] = [
 
 export const NavbarDestopTablet = ({
     openSidebar,
-    activeItem,
     role,
-    onSetActiveItem,
     loadingNav,
 }: {
     openSidebar: boolean;
-    activeItem: string;
     role: string;
-    onSetActiveItem: (label: string) => void;
     loadingNav: boolean;
 }) => {
 
     const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
     const router = useRouter();
+    const pathname = usePathname();
 
     const handleClick = (label: string) => {
-        onSetActiveItem(label);
+        // onSetActiveItem(label);
     };
 
     const handleLogout = async () => {
@@ -105,8 +102,7 @@ export const NavbarDestopTablet = ({
                                             <Link
                                                 href={href}
                                                 onClick={() => handleClick(label)}
-                                                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${activeItem === label ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                                    } transition-all`}
+                                                className={`flex items-center gap-3 rounded-lg px-3 py-2 ${pathname === href ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'} transition-all`}
                                             >
                                                 {icon}
                                                 {openSidebar && <span className="transition-opacity duration-300">{label}</span>}
@@ -152,19 +148,16 @@ export const NavbarDestopTablet = ({
 
 
 export const NavbarMobile = ({
-    activeItem,
     role,
-    onSetActiveItem
 }: {
-    activeItem: string;
     role: string;
-    onSetActiveItem: (label: string) => void;
 }) => {
 
     const navItems = role === "administrator" ? navItemsAdministrator : navItemsWarehouser;
+    const pathname = usePathname();
 
     const handleClick = (label: string) => {
-        onSetActiveItem(label);
+        // onSetActiveItem(label);
     };
 
     return (
@@ -186,7 +179,7 @@ export const NavbarMobile = ({
                             key={label}
                             href={href}
                             onClick={() => handleClick(label)}
-                            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 ${activeItem === label ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
+                            className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 ${pathname === href ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
                                 }`}
                         >
                             {icon}

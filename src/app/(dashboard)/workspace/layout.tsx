@@ -26,7 +26,6 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 export default function DashboardLayout({ children, }: { children: React.ReactNode }) {
 
     const [openSidebar, setOpenSidebar] = useState<boolean>(true);
-    const [activeItem, setActiveItem] = useState<string>('Dashboard');
     const [userRole, setUserRole] = useState<string>('');
     const [loadingNavbar, setLoadingNavbar] = useState<boolean>(true);
 
@@ -46,27 +45,18 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
         fetchData();
     }, [userRole]);
 
-
-    const handleSetActiveItem = (label: string) => {
-        setActiveItem(label);
-    };
-
     return (
         <>
             <div className={`grid h-screen w-full transition-all duration-300 ${openSidebar ? 'md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]' : 'md:grid-cols-[75px_1fr] lg:grid-cols-[75px_1fr]'}`}>
                 <NavbarDestopTablet
                     openSidebar={openSidebar}
-                    activeItem={activeItem}
                     role={userRole}
-                    onSetActiveItem={handleSetActiveItem}
                     loadingNav={loadingNavbar}
                 />
                 <div className="flex flex-col">
                     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
                         <NavbarMobile
-                            activeItem={activeItem}
                             role={userRole}
-                            onSetActiveItem={handleSetActiveItem}
                         />
                         <Button
                             variant="outline"
