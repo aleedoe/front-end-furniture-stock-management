@@ -1,7 +1,7 @@
 "use server";
 
 import { axiosInstance } from "@/lib/axios";
-import { encrypt } from "@/lib/crypto";
+import { encrypt } from "@/lib/crypto-data";
 import { cookies } from "next/headers";
 
 export async function handleLogin(
