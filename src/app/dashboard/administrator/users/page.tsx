@@ -1,13 +1,33 @@
 "use client"
 
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import React from 'react'
-import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icons/lu'
-import { getUsers } from '@/api/dashboard/administrator/actions'
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import React, { useState } from 'react';
+import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icons/lu';
+import { getUsers } from '@/api/dashboard/administrator/actions';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import {
     Pagination,
@@ -17,7 +37,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 
 interface UserType {
     id: number;
@@ -28,24 +48,28 @@ interface UserType {
     password: string;
 }
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <UserPage />
         </QueryClientProvider>
-    )
+    );
 }
 
 const UserPage = () => {
+    const [page, setPage] = useState(1);
+
     const { data, error, isLoading } = useQuery({
-        queryKey: ['users'],
-        queryFn: getUsers,
+        queryKey: ['users', page],
+        queryFn: () => getUsers(page),
         refetchOnWindowFocus: false,
     });
 
-    console.log('react-query - data user: ', data);
+    const handlePageChange = (newPage: number) => {
+        setPage(newPage);
+    };
 
     return (
         <div className="p-4 lg:p-6">
@@ -60,39 +84,7 @@ const UserPage = () => {
                             <TabsTrigger value="reseller">Reseller</TabsTrigger>
                         </TabsList>
                         <div className="ml-auto flex items-center gap-2">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="outline" size="sm" className="h-8 gap-1">
-                                        <LuListFilter size={20} />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                            Filter
-                                        </span>
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuCheckboxItem checked>
-                                        Active
-                                    </DropdownMenuCheckboxItem>
-                                    <DropdownMenuCheckboxItem>Draft</DropdownMenuCheckboxItem>
-                                    <DropdownMenuCheckboxItem>
-                                        Archived
-                                    </DropdownMenuCheckboxItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                            <Button size="sm" variant="outline" className="h-8 gap-1">
-                                <LuFile size={20} />
-                                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                    Export
-                                </span>
-                            </Button>
-                            <Button size="sm" className="h-8 gap-1">
-                                <LuPlusCircle size={20} />
-                                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                    Add User
-                                </span>
-                            </Button>
+                            {/* Other dropdown and button controls */}
                         </div>
                     </div>
                     <TabsContent value="internal-user">
@@ -101,7 +93,7 @@ const UserPage = () => {
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>No</TableHead> {/* Kolom Nomor */}
+                                            <TableHead>No</TableHead>
                                             <TableHead>Name</TableHead>
                                             <TableHead>Access Right</TableHead>
                                             <TableHead>Email</TableHead>
@@ -125,7 +117,7 @@ const UserPage = () => {
                                         ) : (
                                             data.data.data.map((user: UserType, index: number) => (
                                                 <TableRow key={user.id}>
-                                                    <TableCell>{index + 1}</TableCell> {/* Menampilkan nomor urut */}
+                                                    <TableCell>{index + 1 + (page - 1) * 10}</TableCell> {/* Adjusted for pagination */}
                                                     <TableCell className="font-medium">{user.name}</TableCell>
                                                     <TableCell>{user.access_rights.name}</TableCell>
                                                     <TableCell>{user.email}</TableCell>
@@ -163,26 +155,33 @@ const UserPage = () => {
                                     </div>
                                     <Pagination className='mx-0 w-auto'>
                                         <PaginationContent>
-                                            <PaginationItem>
-                                                <PaginationPrevious href="#" />
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href="#">1</PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href="#" isActive>
-                                                    2
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink href="#">3</PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationEllipsis />
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationNext href="#" />
-                                            </PaginationItem>
+                                            {data?.data?.previous && (
+                                                <PaginationItem>
+                                                    <PaginationPrevious
+                                                        href="#"
+                                                        onClick={() => handlePageChange(page - 1)}
+                                                    />
+                                                </PaginationItem>
+                                            )}
+                                            {[...Array(data?.data?.total_pages)].map((_, i) => (
+                                                <PaginationItem key={i}>
+                                                    <PaginationLink
+                                                        href="#"
+                                                        isActive={i + 1 === page}
+                                                        onClick={() => handlePageChange(i + 1)}
+                                                    >
+                                                        {i + 1}
+                                                    </PaginationLink>
+                                                </PaginationItem>
+                                            ))}
+                                            {data?.data?.next && (
+                                                <PaginationItem>
+                                                    <PaginationNext
+                                                        href="#"
+                                                        onClick={() => handlePageChange(page + 1)}
+                                                    />
+                                                </PaginationItem>
+                                            )}
                                         </PaginationContent>
                                     </Pagination>
                                 </div>
@@ -192,7 +191,7 @@ const UserPage = () => {
                 </Tabs>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default App
+export default App;

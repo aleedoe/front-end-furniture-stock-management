@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
 import { getSessionData } from "@/lib/session";
 
-export async function getUsers() {
+export async function getUsers(page: number = 1) {
     try {
         // Ambil data sesi menggunakan fungsi getSessionData()
         const sessionData = await getSessionData();
@@ -20,8 +20,8 @@ export async function getUsers() {
             },
         };
 
-        // Kirim permintaan dengan header Authorization
-        const response = await axiosInstance.get('/administrator/', config);
+        // Kirim permintaan dengan header Authorization dan pagination
+        const response = await axiosInstance.get(`/administrator/?page=${page}`, config);
 
         return response;
         
