@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { decrypt } from "./data-encript";
+import { decrypt } from "./crypto-data";
 
 export async function getSessionData() {
     const encryptedData = cookies().get("session");
