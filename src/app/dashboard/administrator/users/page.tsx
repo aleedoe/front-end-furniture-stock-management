@@ -2,89 +2,27 @@
 
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import {
-    Card,
-    CardContent,
-    CardFooter,
-} from "@/components/ui/card"
-import React, { useEffect, useState } from 'react'
+import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import React from 'react'
 import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icons/lu'
-import Image from 'next/image'
-import { Badge } from '@/components/ui/badge'
 import { getUsers } from '@/api/dashboard/administrator/actions'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
+interface UserType {
+    id: number;
+    name: string;
+    access_rights: any;
+    email: string;
+    phone: string;
+    password: string;
+}
 
-const products = [
-    {
-        id: 1,
-        name: "Laser Lemonade Machine",
-        status: "Draft",
-        price: "$499.99",
-        totalSales: 25,
-        createdAt: "2023-07-12 10:42 AM",
-        imageUrl: "/placeholder.svg",
-    },
-    {
-        id: 2,
-        name: "Hypernova Headphones",
-        status: "Active",
-        price: "$129.99",
-        totalSales: 100,
-        createdAt: "2023-10-18 03:21 PM",
-        imageUrl: "/placeholder.svg",
-    },
-    {
-        id: 3,
-        name: "AeroGlow Desk Lamp",
-        status: "Active",
-        price: "$39.99",
-        totalSales: 50,
-        createdAt: "2023-11-29 08:15 AM",
-        imageUrl: "/placeholder.svg",
-    },
-    {
-        id: 4,
-        name: "TechTonic Energy Drink",
-        status: "Draft",
-        price: "$2.99",
-        totalSales: 0,
-        createdAt: "2023-12-25 11:59 PM",
-        imageUrl: "/placeholder.svg",
-    },
-    {
-        id: 5,
-        name: "Gamer Gear Pro Controller",
-        status: "Active",
-        price: "$59.99",
-        totalSales: 75,
-        createdAt: "2024-01-01 12:00 AM",
-        imageUrl: "/placeholder.svg",
-    },
-    {
-        id: 6,
-        name: "Luminous VR Headset",
-        status: "Active",
-        price: "$199.99",
-        totalSales: 30,
-        createdAt: "2024-02-14 02:14 PM",
-        imageUrl: "/placeholder.svg",
-    },
-]
-
-// Create a client
 const queryClient = new QueryClient()
 
 function App() {
     return (
-        // Provide the client to your App
         <QueryClientProvider client={queryClient}>
             <UserPage />
         </QueryClientProvider>
@@ -95,10 +33,10 @@ const UserPage = () => {
     const { data, error, isLoading } = useQuery({
         queryKey: ['users'],
         queryFn: getUsers,
+        refetchOnWindowFocus: false,
     });
 
     console.log('react-query - data user: ', data);
-
 
     return (
         <div className="p-4 lg:p-6">
@@ -106,12 +44,11 @@ const UserPage = () => {
                 <h1 className="text-lg font-semibold md:text-2xl">Users</h1>
             </div>
             <div className='mt-2'>
-                <Tabs defaultValue="all">
+                <Tabs defaultValue="internal-user">
                     <div className="flex items-center">
                         <TabsList>
-                            <TabsTrigger value="all">Administrator</TabsTrigger>
-                            <TabsTrigger value="active">Warehouser</TabsTrigger>
-                            <TabsTrigger value="draft">Reseller</TabsTrigger>
+                            <TabsTrigger value="internal-user">Internal user</TabsTrigger>
+                            <TabsTrigger value="reseller">Reseller</TabsTrigger>
                         </TabsList>
                         <div className="ml-auto flex items-center gap-2">
                             <DropdownMenu>
@@ -144,92 +81,73 @@ const UserPage = () => {
                             <Button size="sm" className="h-8 gap-1">
                                 <LuPlusCircle size={20} />
                                 <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                    Add Product
+                                    Add User
                                 </span>
                             </Button>
                         </div>
                     </div>
-                    <TabsContent value="all">
+                    <TabsContent value="internal-user">
                         <Card x-chunk="dashboard-06-chunk-0">
                             <CardContent>
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead className="hidden w-[100px] sm:table-cell">
-                                                <span className="sr-only">Image</span>
-                                            </TableHead>
                                             <TableHead>Name</TableHead>
-                                            <TableHead>Status</TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Price
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Total Sales
-                                            </TableHead>
-                                            <TableHead className="hidden md:table-cell">
-                                                Created at
-                                            </TableHead>
+                                            <TableHead>Access Right</TableHead>
+                                            <TableHead>Email</TableHead>
+                                            <TableHead>Phone</TableHead>
+                                            <TableHead>Password</TableHead>
                                             <TableHead>
+                                                Actions
                                                 <span className="sr-only">Actions</span>
                                             </TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {products.map(product => (
-                                            <TableRow key={product.id}>
-                                                <TableCell className="hidden sm:table-cell">
-                                                    <Image
-                                                        alt="Product image"
-                                                        className="aspect-square rounded-md object-cover"
-                                                        height="64"
-                                                        src={product.imageUrl}
-                                                        width="64"
-                                                    />
-                                                </TableCell>
-                                                <TableCell className="font-medium">
-                                                    {product.name}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Badge variant={product.status === "Active" ? "outline" : "secondary"}>
-                                                        {product.status}
-                                                    </Badge>
-                                                </TableCell>
-                                                <TableCell className="hidden md:table-cell">
-                                                    {product.price}
-                                                </TableCell>
-                                                <TableCell className="hidden md:table-cell">
-                                                    {product.totalSales}
-                                                </TableCell>
-                                                <TableCell className="hidden md:table-cell">
-                                                    {product.createdAt}
-                                                </TableCell>
-                                                <TableCell>
-                                                    <DropdownMenu>
-                                                        <DropdownMenuTrigger asChild>
-                                                            <Button
-                                                                aria-haspopup="true"
-                                                                size="icon"
-                                                                variant="ghost"
-                                                            >
-                                                                <LuMoreHorizontal size={18} />
-                                                                <span className="sr-only">Toggle menu</span>
-                                                            </Button>
-                                                        </DropdownMenuTrigger>
-                                                        <DropdownMenuContent align="end">
-                                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                            <DropdownMenuItem>Delete</DropdownMenuItem>
-                                                        </DropdownMenuContent>
-                                                    </DropdownMenu>
-                                                </TableCell>
+                                        {isLoading ? (
+                                            <TableRow>
+                                                <TableCell colSpan={6}>Loading...</TableCell>
                                             </TableRow>
-                                        ))}
+                                        ) : error ? (
+                                            <TableRow>
+                                                <TableCell colSpan={6}>Error loading data</TableCell>
+                                            </TableRow>
+                                        ) : (
+                                            data.data.data.map((user: UserType) => (
+                                                <TableRow key={user.id}>
+                                                    <TableCell className="font-medium">{user.name}</TableCell>
+                                                    <TableCell>{user.access_rights.name}</TableCell>
+                                                    <TableCell>{user.email}</TableCell>
+                                                    <TableCell>{user.phone}</TableCell>
+                                                    <TableCell>{user.password}</TableCell>
+                                                    <TableCell>
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button
+                                                                    aria-haspopup="true"
+                                                                    size="icon"
+                                                                    variant="ghost"
+                                                                >
+                                                                    <LuMoreHorizontal size={18} />
+                                                                    <span className="sr-only">Toggle menu</span>
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent align="end">
+                                                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                                                                <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))
+                                        )}
                                     </TableBody>
                                 </Table>
                             </CardContent>
                             <CardFooter>
                                 <div className="text-xs text-muted-foreground">
-                                    Showing <strong>1-10</strong> of <strong>32</strong> products
+                                    Showing <strong>{data?.data?.current_page}</strong> of <strong>{data?.data?.total_pages}</strong> pages
                                 </div>
                             </CardFooter>
                         </Card>
