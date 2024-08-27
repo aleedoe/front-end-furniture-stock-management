@@ -14,7 +14,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { handleLogin } from '@/app/(dashboard)/admin-login/api/actions/auth';
+import { handleLogin } from '@/app/login/api/actions/auth';
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
@@ -63,9 +63,9 @@ export default function FormHandler() {
                 });
 
                 if (res.data.access_rights.name === "administrator") {
-                    router.push("/workspace/administrator");
+                    router.push("/dashboard/administrator");
                 } else {
-                    router.push("/workspace/warehouser");}
+                    router.push("/dashboard/warehouser");}
             }
 
             if (res.status === 'error') {

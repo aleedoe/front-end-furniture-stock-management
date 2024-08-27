@@ -18,7 +18,7 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { useEffect, useState } from "react"
-import { NavbarDestopTablet, NavbarMobile } from "@/components/workspace/Navbar"
+import { NavbarDestopTablet, NavbarMobile } from "@/components/dashboard/Navbar"
 import { getSessionData } from "@/lib/session"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 

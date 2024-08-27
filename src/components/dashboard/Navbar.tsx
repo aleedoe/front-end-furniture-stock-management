@@ -42,12 +42,12 @@ interface NavItem {
 }
 
 const navItemsAdministrator: NavItem[] = [
-    { href: '/workspace/administrator', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
-    { href: '/workspace/administrator/orders', icon: <LuShoppingCart size={20} />, label: 'Orders' },
+    { href: '/dashboard/administrator', icon: <AiOutlineHome size={20} />, label: 'Dashboard' },
+    { href: '/dashboard/administrator/orders', icon: <LuShoppingCart size={20} />, label: 'Orders' },
     { href: '#', icon: <PiNotepad size={20} />, label: 'Transactions' },
     { href: '#', icon: <LuPackage size={20} />, label: 'Items' },
     { href: '#', icon: <TbCategory size={20} />, label: 'Category' },
-    { href: '/workspace/administrator/users', icon: <LuUsers size={20} />, label: 'Users' },
+    { href: '/dashboard/administrator/users', icon: <LuUsers size={20} />, label: 'Users' },
 ];
 
 const navItemsWarehouser: NavItem[] = [
@@ -76,7 +76,7 @@ export const NavbarDestopTablet = ({
 
     const handleLogout = async () => {
         await deleteSessionData();
-        router.push('/admin-login');
+        router.push('/login');
     }
 
     return (

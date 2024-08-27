@@ -5,7 +5,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import FormHandler from '@/components/admin-login/FormHandler';
+import FormHandler from '@/components/login/FormHandler';
 
 export default function PageLogin() {
 
