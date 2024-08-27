@@ -92,6 +92,7 @@ const UserPage = () => {
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
+                                            <TableHead>No</TableHead> {/* Kolom Nomor */}
                                             <TableHead>Name</TableHead>
                                             <TableHead>Access Right</TableHead>
                                             <TableHead>Email</TableHead>
@@ -106,15 +107,16 @@ const UserPage = () => {
                                     <TableBody>
                                         {isLoading ? (
                                             <TableRow>
-                                                <TableCell colSpan={6}>Loading...</TableCell>
+                                                <TableCell colSpan={7}>Loading...</TableCell>
                                             </TableRow>
                                         ) : error ? (
                                             <TableRow>
-                                                <TableCell colSpan={6}>Error loading data</TableCell>
+                                                <TableCell colSpan={7}>Error loading data</TableCell>
                                             </TableRow>
                                         ) : (
-                                            data.data.data.map((user: UserType) => (
+                                            data.data.data.map((user: UserType, index: number) => (
                                                 <TableRow key={user.id}>
+                                                    <TableCell>{index + 1}</TableCell> {/* Menampilkan nomor urut */}
                                                     <TableCell className="font-medium">{user.name}</TableCell>
                                                     <TableCell>{user.access_rights.name}</TableCell>
                                                     <TableCell>{user.email}</TableCell>
