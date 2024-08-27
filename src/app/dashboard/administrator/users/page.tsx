@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import {
@@ -12,10 +14,11 @@ import {
     CardContent,
     CardFooter,
 } from "@/components/ui/card"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icons/lu'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
+import { getUsers } from '@/api/dashboard/administrator/actions'
 
 
 const products = [
@@ -75,7 +78,26 @@ const products = [
     },
 ]
 
-const userPage = () => {
+const UserPage = () => {
+    const [dataUser, setDataUser] = useState<any>(null);
+
+    const fetchData = async () => {
+        const data = await getUsers();
+
+        if (data.status === 200 && data.data) {
+            setDataUser(data.data); // Set only the user data
+        } else {
+            console.error('Failed to retrieve user data');
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    console.log('data user: ', dataUser);
+    
+    
     return (
         <div className="p-4 lg:p-6">
             <div className="flex items-center">
@@ -216,4 +238,4 @@ const userPage = () => {
     )
 }
 
-export default userPage
+export default UserPage

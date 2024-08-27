@@ -1,7 +1,4 @@
-"use server";
-
 import { axiosInstance } from "@/lib/axios";
-import { decrypt } from "@/lib/crypto-data";
 import { getSessionData } from "@/lib/session";
 
 export async function getUsers() {
@@ -18,22 +15,19 @@ export async function getUsers() {
         // Buat konfigurasi dengan Authorization header
         const config = {
             headers: {
+                Accept: 'application/json',
                 Authorization: `Bearer ${token}`,
             },
         };
 
         // Kirim permintaan dengan header Authorization
-        const response = await axiosInstance.post('/administrator/', {}, config);
+        const response = await axiosInstance.get('/administrator/', config);
 
-        // Dekripsi data sebelum mengembalikannya (jika diperlukan)
-        const decryptedData = decrypt(JSON.stringify(response.data));
-        console.log('data administrator: ', decryptedData);
-
-        return decryptedData;
+        return response;
         
     } catch (error: any) {
-        console.error('Login failed:', error.response.data);
+        console.error('Fetching data failed:', error);
         // Return the error message
-        return error.response.data;
+        return error;
     }
 }
