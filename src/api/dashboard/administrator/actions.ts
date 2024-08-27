@@ -4,7 +4,7 @@ import { axiosInstance } from "@/lib/axios";
 import { decrypt } from "@/lib/crypto-data";
 import { getSessionData } from "@/lib/session";
 
-export async function getAdministrators() {
+export async function getUsers() {
     try {
         // Ambil data sesi menggunakan fungsi getSessionData()
         const sessionData = await getSessionData();
