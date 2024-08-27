@@ -9,6 +9,15 @@ import React from 'react'
 import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icons/lu'
 import { getUsers } from '@/api/dashboard/administrator/actions'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination"
 
 interface UserType {
     id: number;
@@ -148,8 +157,34 @@ const UserPage = () => {
                                 </Table>
                             </CardContent>
                             <CardFooter>
-                                <div className="text-xs text-muted-foreground">
-                                    Showing <strong>{data?.data?.current_page}</strong> of <strong>{data?.data?.total_pages}</strong> pages
+                                <div className='w-full flex flex-row items-center justify-between'>
+                                    <div className="text-xs text-muted-foreground">
+                                        Showing <strong>{data?.data?.current_page}</strong> of <strong>{data?.data?.total_pages}</strong> pages
+                                    </div>
+                                    <Pagination className='mx-0 w-auto'>
+                                        <PaginationContent>
+                                            <PaginationItem>
+                                                <PaginationPrevious href="#" />
+                                            </PaginationItem>
+                                            <PaginationItem>
+                                                <PaginationLink href="#">1</PaginationLink>
+                                            </PaginationItem>
+                                            <PaginationItem>
+                                                <PaginationLink href="#" isActive>
+                                                    2
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                            <PaginationItem>
+                                                <PaginationLink href="#">3</PaginationLink>
+                                            </PaginationItem>
+                                            <PaginationItem>
+                                                <PaginationEllipsis />
+                                            </PaginationItem>
+                                            <PaginationItem>
+                                                <PaginationNext href="#" />
+                                            </PaginationItem>
+                                        </PaginationContent>
+                                    </Pagination>
                                 </div>
                             </CardFooter>
                         </Card>
