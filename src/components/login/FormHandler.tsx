@@ -14,10 +14,10 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { handleLogin } from '@/app/login/api/actions/auth';
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
+import { handleLogin } from "@/api/login/auth";
 
 
 // Schema for form validation using Zod
