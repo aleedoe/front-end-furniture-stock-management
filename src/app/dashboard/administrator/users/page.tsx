@@ -19,6 +19,7 @@ import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icon
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { getUsers } from '@/api/dashboard/administrator/actions'
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
 
 const products = [
@@ -78,26 +79,27 @@ const products = [
     },
 ]
 
+// Create a client
+const queryClient = new QueryClient()
+
+function App() {
+    return (
+        // Provide the client to your App
+        <QueryClientProvider client={queryClient}>
+            <UserPage />
+        </QueryClientProvider>
+    )
+}
+
 const UserPage = () => {
-    const [dataUser, setDataUser] = useState<any>(null);
+    const { data, error, isLoading } = useQuery({
+        queryKey: ['users'],
+        queryFn: getUsers,
+    });
 
-    const fetchData = async () => {
-        const data = await getUsers();
+    console.log('react-query - data user: ', data);
 
-        if (data.status === 200 && data.data) {
-            setDataUser(data.data); // Set only the user data
-        } else {
-            console.error('Failed to retrieve user data');
-        }
-    };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    console.log('data user: ', dataUser);
-    
-    
     return (
         <div className="p-4 lg:p-6">
             <div className="flex items-center">
@@ -238,4 +240,4 @@ const UserPage = () => {
     )
 }
 
-export default UserPage
+export default App
