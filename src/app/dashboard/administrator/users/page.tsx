@@ -59,16 +59,18 @@ function App() {
 }
 
 const UserPage = () => {
-    const [page, setPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const { data, error, isLoading } = useQuery({
-        queryKey: ['users', page],
-        queryFn: () => getUsers(page),
+        queryKey: ['users', currentPage],
+        queryFn: () => getUsers(currentPage),
         refetchOnWindowFocus: false,
     });
 
-    const handlePageChange = (newPage: number) => {
-        setPage(newPage);
+    const totalPages = data?.data?.total_pages || 1;
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
     };
 
     return (
@@ -150,7 +152,7 @@ const UserPage = () => {
                                         ) : (
                                             data.data.data.map((user: UserType, index: number) => (
                                                 <TableRow key={user.id}>
-                                                    <TableCell>{index + 1 + (page - 1) * 10}</TableCell> {/* Adjusted for pagination */}
+                                                    <TableCell>{index + 1 + (currentPage - 1) * 10}</TableCell> {/* Adjusted for pagination */}
                                                     <TableCell className="font-medium">{user.name}</TableCell>
                                                     <TableCell>{user.access_rights.name}</TableCell>
                                                     <TableCell>{user.email}</TableCell>
@@ -186,35 +188,55 @@ const UserPage = () => {
                                     <div className="text-xs text-muted-foreground">
                                         Showing <strong>{data?.data?.current_page}</strong> of <strong>{data?.data?.total_pages}</strong> pages
                                     </div>
-                                    <Pagination className='mx-0 w-auto'>
+                                    <Pagination className="mx-0 w-auto">
                                         <PaginationContent>
-                                            {data?.data?.previous && (
-                                                <PaginationItem>
-                                                    <PaginationPrevious
-                                                        href="#"
-                                                        onClick={() => handlePageChange(page - 1)}
-                                                    />
-                                                </PaginationItem>
-                                            )}
-                                            {[...Array(data?.data?.total_pages)].map((_, i) => (
-                                                <PaginationItem key={i}>
-                                                    <PaginationLink
-                                                        href="#"
-                                                        isActive={i + 1 === page}
-                                                        onClick={() => handlePageChange(i + 1)}
-                                                    >
-                                                        {i + 1}
-                                                    </PaginationLink>
-                                                </PaginationItem>
-                                            ))}
-                                            {data?.data?.next && (
-                                                <PaginationItem>
-                                                    <PaginationNext
-                                                        href="#"
-                                                        onClick={() => handlePageChange(page + 1)}
-                                                    />
-                                                </PaginationItem>
-                                            )}
+                                            <PaginationItem>
+                                                <PaginationPrevious
+                                                    href="#"
+                                                    onClick={() => handlePageChange(currentPage - 1)}
+                                                    aria-disabled={currentPage === 1}
+                                                />
+                                            </PaginationItem>
+                                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                                                if (totalPages > 3) {
+                                                    if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
+                                                        return (
+                                                            <PaginationItem key={page}>
+                                                                <PaginationLink
+                                                                    href="#"
+                                                                    isActive={page === currentPage}
+                                                                    onClick={() => handlePageChange(page)}
+                                                                >
+                                                                    {page}
+                                                                </PaginationLink>
+                                                            </PaginationItem>
+                                                        );
+                                                    } else if (page === currentPage - 2 || page === currentPage + 2) {
+                                                        return <PaginationEllipsis key={page} />;
+                                                    } else {
+                                                        return null;
+                                                    }
+                                                } else {
+                                                    return (
+                                                        <PaginationItem key={page}>
+                                                            <PaginationLink
+                                                                href="#"
+                                                                isActive={page === currentPage}
+                                                                onClick={() => handlePageChange(page)}
+                                                            >
+                                                                {page}
+                                                            </PaginationLink>
+                                                        </PaginationItem>
+                                                    );
+                                                }
+                                            })}
+                                            <PaginationItem>
+                                                <PaginationNext
+                                                    href="#"
+                                                    onClick={() => handlePageChange(currentPage + 1)}
+                                                    aria-disabled={currentPage === totalPages}
+                                                />
+                                            </PaginationItem>
                                         </PaginationContent>
                                     </Pagination>
                                 </div>
