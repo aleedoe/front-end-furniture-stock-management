@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
 import { getSessionData } from "@/lib/session";
 
-export async function getUsers(page: number = 1) {
+export async function getInternalUsers(page: number = 1) {
     try {
         // Ambil data sesi menggunakan fungsi getSessionData()
         const sessionData = await getSessionData();

@@ -27,7 +27,7 @@ import {
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React, { useState } from 'react';
 import { LuFile, LuListFilter, LuMoreHorizontal, LuPlusCircle } from 'react-icons/lu';
-import { getUsers } from '@/api/dashboard/administrator/users/actions';
+import { getInternalUsers } from '@/api/dashboard/administrator/users/actions';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import {
     Pagination,
@@ -63,7 +63,7 @@ const UserPage = () => {
 
     const { data, error, isLoading } = useQuery({
         queryKey: ['users', currentPage],
-        queryFn: () => getUsers(currentPage),
+        queryFn: () => getInternalUsers(currentPage),
         refetchOnWindowFocus: false,
     });
 
