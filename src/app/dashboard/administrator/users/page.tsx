@@ -49,7 +49,7 @@ const UserPage = () => {
                 <h1 className="text-lg font-semibold md:text-2xl">Users</h1>
             </div>
             <div className='mt-2'>
-                <Tabs defaultValue="internal-user">
+                <Tabs defaultValue="internal-user" >
                     <div className="flex items-center">
                         <TabsList>
                             <TabsTrigger value="internal-user">Internal user</TabsTrigger>
@@ -92,8 +92,8 @@ const UserPage = () => {
                             {/* Other dropdown and button controls */}
                         </div>
                     </div>
-                    <MainTabReseller/>
                     <MainTabInterUser/>
+                    <MainTabReseller/>
                 </Tabs>
             </div>
         </div>

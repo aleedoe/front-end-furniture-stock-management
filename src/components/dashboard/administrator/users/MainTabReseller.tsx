@@ -31,7 +31,7 @@ import {
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { useQuery } from '@tanstack/react-query';
-import { getInternalUsers } from '@/api/dashboard/administrator/users/actions';
+import { getResellers } from '@/api/dashboard/administrator/users/actions';
 
 import { LuMoreHorizontal } from 'react-icons/lu';
 
@@ -51,7 +51,7 @@ const MainTabReseller = () => {
 
     const { data, error, isLoading } = useQuery({
         queryKey: ['users', currentPage],
-        queryFn: () => getInternalUsers(currentPage),
+        queryFn: () => getResellers(currentPage),
         refetchOnWindowFocus: false,
     });
 
@@ -63,7 +63,7 @@ const MainTabReseller = () => {
     
     return (
         <TabsContent value="reseller">
-            <Card x-chunk="dashboard-06-chunk-0">
+            <Card x-chunk="reseller">
                 <CardContent>
                     <Table>
                         <TableHeader>
