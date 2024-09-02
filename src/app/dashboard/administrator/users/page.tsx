@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -18,28 +16,8 @@ import {
 } from "@/components/ui/tabs";
 import React from 'react';
 import { LuFile, LuListFilter, LuPlusCircle } from 'react-icons/lu';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import MainTabInterUser from '@/components/dashboard/administrator/users/MainTabInterUser';
 import MainTabReseller from '@/components/dashboard/administrator/users/MainTabReseller';
-
-interface UserType {
-    id: number;
-    name: string;
-    access_rights: any;
-    email: string;
-    phone: string;
-    password: string;
-}
-
-const queryClient = new QueryClient();
-
-function App() {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <UserPage />
-        </QueryClientProvider>
-    );
-}
 
 const UserPage = () => {
 
@@ -100,4 +78,4 @@ const UserPage = () => {
     );
 };
 
-export default App;
+export default UserPage;

@@ -1,3 +1,6 @@
+"use client"
+
+
 import React, { useState } from 'react'
 
 import {
@@ -30,7 +33,7 @@ import {
 } from "@/components/ui/tabs";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { getInternalUsers } from '@/api/dashboard/administrator/users/actions';
 
 import { LuMoreHorizontal } from 'react-icons/lu';
@@ -43,6 +46,16 @@ interface UserType {
     email: string;
     phone: string;
     password: string;
+}
+
+const queryClient = new QueryClient();
+
+function App() {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <MainTabInterUser />
+        </QueryClientProvider>
+    );
 }
 
 const MainTabInterUser = () => {
@@ -63,7 +76,7 @@ const MainTabInterUser = () => {
     
     return (
         <TabsContent value="internal-user">
-            <Card x-chunk="dashboard-06-chunk-0">
+            <Card x-chunk="internal-user">
                 <CardContent>
                     <Table>
                         <TableHeader>
@@ -186,4 +199,4 @@ const MainTabInterUser = () => {
     )
 }
 
-export default MainTabInterUser
+export default App
