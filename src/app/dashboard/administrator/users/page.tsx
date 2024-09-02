@@ -38,6 +38,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import MainTabInterUser from '@/components/dashboard/administrator/users/MainTabInterUser';
 
 interface UserType {
     id: number;
@@ -122,7 +123,7 @@ const UserPage = () => {
                             {/* Other dropdown and button controls */}
                         </div>
                     </div>
-                    <TabsContent value="internal-user">
+                    <TabsContent value="reseller">
                         <Card x-chunk="dashboard-06-chunk-0">
                             <CardContent>
                                 <Table>
@@ -243,6 +244,7 @@ const UserPage = () => {
                             </CardFooter>
                         </Card>
                     </TabsContent>
+                    <MainTabInterUser/>
                 </Tabs>
             </div>
         </div>
