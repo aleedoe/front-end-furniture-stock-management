@@ -32,6 +32,8 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
     useEffect(() => {
         const fetchData = async () => {
             const data = await getSessionData();
+            console.log(data.data);
+
 
             if (data.status === 'success' && data.data && data.data.access_rights) {
                 setUserRole(data.data.access_rights.name);
@@ -98,7 +100,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                     </header>
                     <main className="flex flex-1 flex-col gap-4 lg:gap-6">
                         <ScrollArea className="h-[calc(100vh-6vh)] lg:h-[calc(98vh-50px)]">
-                                {children}
+                            {children}
                         </ScrollArea>
                     </main>
                 </div>
