@@ -15,6 +15,15 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
@@ -23,15 +32,19 @@ const addInternalUser = z.object({
         message: "Username must be at least 2 characters.",
     }),
     phone: z.number().min(2, {
-        message: "phone must be at least 2 characters.",
+        message: "Phone must be at least 2 characters.",
     }),
-    email: z.string().min(2, {
-        message: "email must be at least 2 characters.",
+    email: z.string().email({
+        message: "Please enter a valid email address.",
     }),
     password: z.string().min(2, {
         message: "Password must be at least 2 characters.",
     }),
+    access_right: z.enum(["administrator", "warehouser"], {
+        message: "Please select a valid access right.",
+    }),
 });
+
 
 export const HandleAddInternalUser = () => {
 
@@ -41,10 +54,13 @@ export const HandleAddInternalUser = () => {
         resolver: zodResolver(addInternalUser),
         defaultValues: {
             username: "",
+            phone: undefined,
+            email: "",
             password: "",
+            access_right: undefined,
         },
     });
-    
+
     const handleSubmitForm = async (data: z.infer<typeof addInternalUser>) => {
 
         try {
@@ -145,9 +161,20 @@ export const HandleAddInternalUser = () => {
                     name="access_right"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>Access Right</FormLabel>
                             <FormControl>
-                                <Input placeholder="access right" {...field} />
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Select access right" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Access Right</SelectLabel>
+                                            <SelectItem value="administrator">Administrator</SelectItem>
+                                            <SelectItem value="warehouser">Warehouser</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
