@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -18,6 +20,18 @@ import React from 'react';
 import { LuFile, LuListFilter, LuPlusCircle } from 'react-icons/lu';
 import MainTabInterUser from '@/components/dashboard/administrator/users/MainTabInterUser';
 import MainTabReseller from '@/components/dashboard/administrator/users/MainTabReseller';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { HandleAddInternalUser } from '@/components/dashboard/administrator/users/ActionModal';
 
 const UserPage = () => {
 
@@ -61,17 +75,33 @@ const UserPage = () => {
                                     Export
                                 </span>
                             </Button>
-                            <Button size="sm" className="h-8 gap-1">
-                                <LuPlusCircle size={20} />
-                                <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                    Add User
-                                </span>
-                            </Button>
+                            <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                    <Button size="sm" className="h-8 gap-1">
+                                        <LuPlusCircle size={20} />
+                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                                            Add User
+                                        </span>
+                                    </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            <HandleAddInternalUser/>
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction>Continue</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
                             {/* Other dropdown and button controls */}
                         </div>
                     </div>
-                    <MainTabInterUser/>
-                    <MainTabReseller/>
+                    <MainTabInterUser />
+                    <MainTabReseller />
                 </Tabs>
             </div>
         </div>
