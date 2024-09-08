@@ -130,7 +130,7 @@ export const HandleAddInternalUser = () => {
                     <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                     <AlertDialogDescription>
                         <Form {...form}>
-                            <form className="grid gap-4">
+                            <form className="grid gap-4" onSubmit={form.handleSubmit(handleSubmitForm)}>
                                 {/* Your form fields here */}
                                 <FormField
                                     control={form.control}
