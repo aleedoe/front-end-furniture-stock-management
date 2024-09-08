@@ -24,12 +24,27 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useToast } from "@/components/ui/use-toast";
+
+import { createInternalUser } from '@/api/dashboard/administrator/users/actions';
+import { LuPlusCircle } from 'react-icons/lu';
 
 const addInternalUser = z.object({
-    username: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
+    name: z.string().min(2, {
+        message: "Name must be at least 2 characters.",
     }),
     phone: z.number().min(2, {
         message: "Phone must be at least 2 characters.",
@@ -40,7 +55,7 @@ const addInternalUser = z.object({
     password: z.string().min(2, {
         message: "Password must be at least 2 characters.",
     }),
-    access_right: z.enum(["administrator", "warehouser"], {
+    access_rights: z.enum(["1", "3"], {
         message: "Please select a valid access right.",
     }),
 });
@@ -48,142 +63,168 @@ const addInternalUser = z.object({
 
 export const HandleAddInternalUser = () => {
 
-    const [loading, setLoading] = useState<boolean>(false);
+    const { toast } = useToast();
+    const [isOpen, setIsOpen] = useState(false);
 
     const form = useForm<z.infer<typeof addInternalUser>>({
         resolver: zodResolver(addInternalUser),
         defaultValues: {
-            username: "",
+            name: "",
             phone: undefined,
             email: "",
             password: "",
-            access_right: undefined,
+            access_rights: undefined,
         },
     });
 
     const handleSubmitForm = async (data: z.infer<typeof addInternalUser>) => {
-
         try {
+            const res = await createInternalUser(data);
+            console.log('res add: ', res.data);
 
-            setLoading(true);
 
-            const res = await handleLogin(data.username, data.password);
-
-            if (res.status === 'success') {
-                console.log('Login successful');
-
+            if (res.data.status === 'success') {
                 toast({
-                    title: "Login successful!",
-                    description: "anda akan segera diarahkan ke halaman administrator.",
+                    title: 'Success!',
+                    description: 'Internal user created successfully.',
+                });
+
+                // Tutup alert dialog setelah sukses
+                setIsOpen(false);
+
+                // Reset form values
+                form.reset({
+                    name: '',
+                    phone: undefined,
+                    email: '',
+                    password: '',
+                    access_rights: undefined, // Reset access_right ke undefined
+                });
+            } else if (res.data.status === 'error') {
+                toast({
+                    title: 'Error',
+                    description: res.data.message || 'Failed to create internal user.',
                 });
             }
-
-            if (res.status === 'error') {
-                console.log('Login failed');
-                if (res.message === "Username not found.") {
-                    form.setError("username", {
-                        type: "manual",
-                        message: res.message,
-                    });
-                } else if (res.message === "Invalid password.") {
-                    form.setError("password", {
-                        type: "manual",
-                        message: res.message,
-                    });
-                }
-            }
-
         } catch (error) {
-            console.error('Login failed', error);
-
-        } finally {
-            setLoading(false);
+            toast({
+                title: 'Error',
+                description: 'An error occurred while creating the user.',
+            });
+            console.error('Create user failed', error);
         }
-    }
+    };
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmitForm)} className="grid gap-4">
-                <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Username</FormLabel>
-                            <FormControl>
-                                <Input placeholder="username" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Phone</FormLabel>
-                            <FormControl>
-                                <Input placeholder="phone" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Email" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <Input type="password" placeholder="password" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="access_right"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Access Right</FormLabel>
-                            <FormControl>
-                                <Select onValueChange={field.onChange} value={field.value}>
-                                    <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Select access right" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>Access Right</SelectLabel>
-                                            <SelectItem value="administrator">Administrator</SelectItem>
-                                            <SelectItem value="warehouser">Warehouser</SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                {/* <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Loading..." : "Login"}
-                </Button> */}
-            </form>
-        </Form>
-    )
-}
+        <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+            <AlertDialogTrigger asChild>
+                <Button size="sm" className="h-8 gap-1">
+                    <LuPlusCircle size={20} />
+                    <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                        Add User
+                    </span>
+                </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        <Form {...form}>
+                            <form className="grid gap-4">
+                                {/* Your form fields here */}
+                                <FormField
+                                    control={form.control}
+                                    name="access_rights"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Access Right</FormLabel>
+                                            <FormControl>
+                                                <Select onValueChange={field.onChange} value={field.value}>
+                                                    <SelectTrigger className="w-[180px]">
+                                                        <SelectValue placeholder="Select access right" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            <SelectLabel>Access Right</SelectLabel>
+                                                            <SelectItem value="1">Administrator</SelectItem>
+                                                            <SelectItem value="3">Warehouser</SelectItem>
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Name</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="name" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="phone"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Phone</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="phone" {...field} type="number" onChange={(e) => field.onChange(Number(e.target.value))} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="email" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input type="password" placeholder="password" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit" className="w-full hidden">
+                                    save
+                                </Button>
+                            </form>
+                        </Form>
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                        type='button'
+                        onClick={form.handleSubmit(handleSubmitForm)} // Handle form submit when "Save" is clicked
+                    >
+                        Save
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+    );
+};

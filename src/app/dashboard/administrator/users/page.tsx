@@ -75,28 +75,7 @@ const UserPage = () => {
                                     Export
                                 </span>
                             </Button>
-                            <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                    <Button size="sm" className="h-8 gap-1">
-                                        <LuPlusCircle size={20} />
-                                        <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                                            Add User
-                                        </span>
-                                    </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            <HandleAddInternalUser/>
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction>Continue</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
+                            <HandleAddInternalUser />
                             {/* Other dropdown and button controls */}
                         </div>
                     </div>
