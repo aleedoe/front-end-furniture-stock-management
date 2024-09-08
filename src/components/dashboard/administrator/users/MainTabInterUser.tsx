@@ -141,37 +141,36 @@ const MainTabInterUser = () => {
                         <div className="text-xs text-muted-foreground">
                             Showing <strong>{data?.data?.current_page}</strong> of <strong>{data?.data?.total_pages}</strong> pages
                         </div>
-                        {totalPages > 3 && (
-                            <Pagination className="mx-0 w-auto">
-                                <PaginationContent>
-                                    {currentPage > 1 && (
-                                        <PaginationItem>
-                                            <PaginationPrevious
-                                                href="#"
-                                                onClick={() => handlePageChange(currentPage - 1)}
-                                            />
-                                        </PaginationItem>
-                                    )}
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                                        if (totalPages > 3) {
-                                            if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
-                                                return (
-                                                    <PaginationItem key={page}>
-                                                        <PaginationLink
-                                                            href="#"
-                                                            isActive={page === currentPage}
-                                                            onClick={() => handlePageChange(page)}
-                                                        >
-                                                            {page}
-                                                        </PaginationLink>
-                                                    </PaginationItem>
-                                                );
-                                            } else if (page === currentPage - 2 || page === currentPage + 2) {
-                                                return <PaginationEllipsis key={page} />;
-                                            } else {
-                                                return null;
-                                            }
-                                        } else {
+                        <Pagination className="mx-0 w-auto">
+                            <PaginationContent>
+                                {currentPage > 1 && (
+                                    <PaginationItem>
+                                        <PaginationPrevious
+                                            href="#"
+                                            onClick={() => handlePageChange(currentPage - 1)}
+                                        />
+                                    </PaginationItem>
+                                )}
+
+                                {/* Adjusted logic for total pages */}
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                                    // Handle cases where total pages is less than 3
+                                    if (totalPages <= 3) {
+                                        return (
+                                            <PaginationItem key={page}>
+                                                <PaginationLink
+                                                    href="#"
+                                                    isActive={page === currentPage}
+                                                    onClick={() => handlePageChange(page)}
+                                                >
+                                                    {page}
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                        );
+                                    }
+                                    // Handle cases where total pages is more than 3
+                                    else {
+                                        if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
                                             return (
                                                 <PaginationItem key={page}>
                                                     <PaginationLink
@@ -183,19 +182,24 @@ const MainTabInterUser = () => {
                                                     </PaginationLink>
                                                 </PaginationItem>
                                             );
+                                        } else if (page === currentPage - 2 || page === currentPage + 2) {
+                                            return <PaginationEllipsis key={page} />;
+                                        } else {
+                                            return null;
                                         }
-                                    })}
-                                    {currentPage < totalPages && (
-                                        <PaginationItem>
-                                            <PaginationNext
-                                                href="#"
-                                                onClick={() => handlePageChange(currentPage + 1)}
-                                            />
-                                        </PaginationItem>
-                                    )}
-                                </PaginationContent>
-                            </Pagination>
-                        )}
+                                    }
+                                })}
+
+                                {currentPage < totalPages && (
+                                    <PaginationItem>
+                                        <PaginationNext
+                                            href="#"
+                                            onClick={() => handlePageChange(currentPage + 1)}
+                                        />
+                                    </PaginationItem>
+                                )}
+                            </PaginationContent>
+                        </Pagination>
                     </div>
                 </CardFooter>
             </Card>
