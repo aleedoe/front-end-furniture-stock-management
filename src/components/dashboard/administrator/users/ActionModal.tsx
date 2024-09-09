@@ -46,7 +46,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from "@/components/ui/use-toast";
 
-import { createInternalUser } from '@/api/dashboard/administrator/users/actions';
+import { createInternalUser, updateInternalUser } from '@/api/dashboard/administrator/users/actions';
 import { LuPlusCircle } from 'react-icons/lu';
 
 const internalUser = z.object({
@@ -260,7 +260,7 @@ export const HandleEditInternalUser = ({ children, userId }: HandleEditInternalU
 
     const handleSubmitForm = async (data: z.infer<typeof internalUser>) => {
         try {
-            const res = await createInternalUser(data);
+            const res = await updateInternalUser(userId, data);
             console.log('res add: ', res.data);
 
 
