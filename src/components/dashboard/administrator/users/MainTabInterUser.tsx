@@ -35,8 +35,11 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { getInternalUsers } from '@/api/dashboard/administrator/users/actions';
+import { FiEdit } from "react-icons/fi";
 
 import { LuMoreHorizontal } from 'react-icons/lu';
+import { RiDeleteBinLine } from "react-icons/ri";
+import { HandleEditInternalUser } from './ActionModal';
 
 
 interface UserType {
@@ -111,24 +114,11 @@ const MainTabInterUser = () => {
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>{user.phone}</TableCell>
                                         <TableCell>{user.password}</TableCell>
-                                        <TableCell>
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button
-                                                        aria-haspopup="true"
-                                                        size="icon"
-                                                        variant="ghost"
-                                                    >
-                                                        <LuMoreHorizontal size={18} />
-                                                        <span className="sr-only">Toggle menu</span>
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end">
-                                                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
+                                        <TableCell className='flex gap-3'>
+                                        <Button variant="outline" className='p-3'><RiDeleteBinLine size={16} /></Button>
+                                            <HandleEditInternalUser userId={user.id}>
+                                                <Button variant="outline" className='p-3'><FiEdit size={16} /></Button>
+                                            </HandleEditInternalUser>
                                         </TableCell>
                                     </TableRow>
                                 ))
