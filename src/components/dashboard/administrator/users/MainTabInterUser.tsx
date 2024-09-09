@@ -116,9 +116,7 @@ const MainTabInterUser = () => {
                                         <TableCell>{user.password}</TableCell>
                                         <TableCell className='flex gap-3'>
                                         <Button variant="outline" className='p-3'><RiDeleteBinLine size={16} /></Button>
-                                            <HandleEditInternalUser userId={user.id}>
-                                                <Button variant="outline" className='p-3'><FiEdit size={16} /></Button>
-                                            </HandleEditInternalUser>
+                                            <HandleEditInternalUser userId={user.id} />
                                         </TableCell>
                                     </TableRow>
                                 ))
