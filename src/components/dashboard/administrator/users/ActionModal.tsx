@@ -118,7 +118,7 @@ export const HandleAddInternalUser = () => {
     return (
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogTrigger asChild>
-                <Button size="sm" className="h-8 gap-1">
+                <Button size="sm" className="h-8 gap-1" onClick={() => form.reset()}>
                     <LuPlusCircle size={20} />
                     <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                         Add User
