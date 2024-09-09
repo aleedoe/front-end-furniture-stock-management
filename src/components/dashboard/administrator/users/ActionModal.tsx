@@ -300,7 +300,7 @@ export const HandleEditInternalUser = ({ userId }: HandleEditInternalUserProps) 
             if (res.data.status === 'success') {
                 toast({
                     title: 'Success!',
-                    description: 'Internal user edited successfully.',
+                    description: res.data.description,
                 });
 
                 // Tutup alert dialog setelah sukses
