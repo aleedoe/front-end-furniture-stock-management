@@ -49,6 +49,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { createInternalUser, getInternalUserById, updateInternalUser } from '@/api/dashboard/administrator/users/actions';
 import { LuPlusCircle } from 'react-icons/lu';
 import { FiEdit } from 'react-icons/fi';
+import { RiDeleteBinLine } from 'react-icons/ri';
 
 const internalUser = z.object({
     name: z.string().min(2, {
@@ -443,3 +444,100 @@ export const HandleEditInternalUser = ({ userId }: HandleEditInternalUserProps) 
         </Popover>
     );
 };
+
+
+export const HandleDeleteInternalUser = ({ userId, userName }: { userId: any; userName: any }) => {
+
+    const { toast } = useToast();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // Loading state
+
+    const form = useForm({
+        defaultValues: {
+            userId: '', // Initialize as empty string
+        },
+    });
+    
+    const handleSubmitForm = async () => {
+        try {
+            const res = await getInternalUserById(userId);
+            console.log('get data individu: ', res.data);
+
+            if (res.data.status === 'success') {
+                // Update form values with the retrieved data
+                form.reset({
+                    userId: res.data.data.userId,
+                });
+            } else if (res.data.status === 'error') {
+                toast({
+                    title: 'Error',
+                    description: res.data.message || 'Failed to get data internal user.',
+                });
+            }
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'An error occurred while fetching the user data.',
+            });
+            console.error('Fetch user data failed', error);
+        } finally {
+            setIsLoading(false); // End loading
+        }
+    };
+    
+    return (
+        <Popover open={isOpen} onOpenChange={setIsOpen}>
+            <PopoverTrigger asChild>
+                <Button 
+                    variant="outline" 
+                    className='p-3' 
+                    onClick={() => {
+                        setIsOpen(true); // Open popover
+                    }}
+                >
+                    <RiDeleteBinLine size={16} />
+                </Button>
+            </PopoverTrigger>
+            <PopoverContent align='start' side='left' className="w-80">
+                {isLoading ? ( 
+                    <div className="flex justify-center items-center h-40">
+                        {/* Replace with a spinner component if desired */}
+                        <p>Loading...</p>
+                    </div>
+                ) : (
+                    <Form {...form}>
+                        <form className="grid gap-4" onSubmit={form.handleSubmit(handleSubmitForm)}>
+                            <span className='text-lg font-semibold'>Are you sure for delete {userName}?</span>
+                            <FormField
+                                control={form.control}
+                                name="userId"
+                                render={({ field }) => (
+                                    <FormItem className='hidden'>
+                                        <FormLabel>Id User</FormLabel>
+                                        <FormControl>
+                                            <Input 
+                                                placeholder="userId" 
+                                                {...field} 
+                                                type="number" 
+                                                value={userId} // Use value from the form state
+                                                onChange={(e) => field.onChange(Number(e.target.value))} 
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" variant="destructive" className="w-full">
+                                Delete
+                            </Button>
+                            <Button type="reset" variant='outline' onClick={() => setIsOpen(false)} className="w-full">
+                                Cancel
+                            </Button>
+                        </form>
+                    </Form>
+                )}
+            </PopoverContent>
+        </Popover>
+    );
+}

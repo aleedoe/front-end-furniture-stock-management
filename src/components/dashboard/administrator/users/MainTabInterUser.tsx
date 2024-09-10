@@ -39,7 +39,7 @@ import { FiEdit } from "react-icons/fi";
 
 import { LuMoreHorizontal } from 'react-icons/lu';
 import { RiDeleteBinLine } from "react-icons/ri";
-import { HandleEditInternalUser } from './ActionModal';
+import { HandleDeleteInternalUser, HandleEditInternalUser } from './ActionModal';
 
 
 interface UserType {
@@ -115,7 +115,7 @@ const MainTabInterUser = () => {
                                         <TableCell>{user.phone}</TableCell>
                                         <TableCell>{user.password}</TableCell>
                                         <TableCell className='flex gap-3'>
-                                        <Button variant="outline" className='p-3'><RiDeleteBinLine size={16} /></Button>
+                                            <HandleDeleteInternalUser userId={user.id} userName={user.name} />
                                             <HandleEditInternalUser userId={user.id} />
                                         </TableCell>
                                     </TableRow>
