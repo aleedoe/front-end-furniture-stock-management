@@ -46,7 +46,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from "@/components/ui/use-toast";
 
-import { createInternalUser, getInternalUserById, updateInternalUser } from '@/api/dashboard/administrator/users/actions';
+import { createInternalUser, deleteInternalUser, getInternalUserById, updateInternalUser } from '@/api/dashboard/administrator/users/actions';
 import { LuPlusCircle } from 'react-icons/lu';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBinLine } from 'react-icons/ri';
@@ -461,14 +461,22 @@ export const HandleDeleteInternalUser = ({ userId, userName }: { userId: any; us
     
     const handleSubmitForm = async () => {
         try {
-            const res = await getInternalUserById(userId);
+            const res = await deleteInternalUser(userId);
             console.log('get data individu: ', res.data);
 
             if (res.data.status === 'success') {
                 // Update form values with the retrieved data
-                form.reset({
-                    userId: res.data.data.userId,
+                toast({
+                    title: 'Success!',
+                    description: res.data.description,
                 });
+                
+                form.reset({
+                    // userId: res.data.data.userId,
+                });
+
+                setIsOpen(false);
+                
             } else if (res.data.status === 'error') {
                 toast({
                     title: 'Error',
