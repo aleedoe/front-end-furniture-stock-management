@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { handleLogin } from "@/api/login/auth";
+import { useDispatch } from "react-redux";
+import { saveTokens, saveUserData } from "@/lib/features/authUser/authUserSlice";
 
 
 // Schema for form validation using Zod
@@ -32,6 +34,7 @@ const LoginFormSchema = z.object({
 
 export default function FormHandler() {
 
+    const dispatch = useDispatch();
     const router = useRouter();
 
     const { toast } = useToast();
@@ -56,6 +59,10 @@ export default function FormHandler() {
 
             if (res.status === 'success') {
                 console.log('Login successful');
+
+                // Save user data and tokens into Redux
+                dispatch(saveUserData(res.data));
+                dispatch(saveTokens(res.tokens));
 
                 toast({
                     title: "Login successful!",
