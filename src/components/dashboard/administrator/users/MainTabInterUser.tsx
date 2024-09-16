@@ -40,6 +40,7 @@ import { FiEdit } from "react-icons/fi";
 import { LuMoreHorizontal } from 'react-icons/lu';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { HandleDeleteInternalUser, HandleEditInternalUser } from './ActionModal';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
 interface UserType {
@@ -85,7 +86,7 @@ const MainTabInterUser = () => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>No</TableHead>
-                                <TableHead>Name with extend component</TableHead>
+                                <TableHead>Name</TableHead>
                                 <TableHead>Access Right</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Phone</TableHead>
@@ -97,10 +98,16 @@ const MainTabInterUser = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
+
+
                             {isLoading ? (
-                                <TableRow>
-                                    <TableCell colSpan={7}>Loading...</TableCell>
-                                </TableRow>
+                                Array(10).fill('').map((_, index) => (
+                                    <TableRow key={index}>
+                                        {Array(7).fill('').map((_, index) => (
+                                            <TableCell key={index}><Skeleton className="h-7 w-full" /></TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
                             ) : error ? (
                                 <TableRow>
                                     <TableCell colSpan={7}>Error loading data</TableCell>
