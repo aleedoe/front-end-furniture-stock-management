@@ -98,13 +98,13 @@ const MainTabInterUser = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-
-
                             {isLoading ? (
-                                Array(10).fill('').map((_, index) => (
-                                    <TableRow key={index}>
-                                        {Array(7).fill('').map((_, index) => (
-                                            <TableCell key={index}><Skeleton className="h-7 w-full" /></TableCell>
+                                Array(10).fill('').map((_, rowIndex) => (
+                                    <TableRow key={rowIndex}>
+                                        {Array(7).fill('').map((_, cellIndex) => (
+                                            <TableCell key={cellIndex}>
+                                                <Skeleton className="h-7 w-full" />
+                                            </TableCell>
                                         ))}
                                     </TableRow>
                                 ))
@@ -113,9 +113,9 @@ const MainTabInterUser = () => {
                                     <TableCell colSpan={7}>Error loading data</TableCell>
                                 </TableRow>
                             ) : (
-                                data.data.data.map((user: UserType, index: number) => (
+                                data.data.data.map((user: UserType, rowIndex: number) => (
                                     <TableRow key={user.id}>
-                                        <TableCell>{index + 1 + (currentPage - 1) * 10}</TableCell> {/* Adjusted for pagination */}
+                                        <TableCell>{rowIndex + 1 + (currentPage - 1) * 10}</TableCell>
                                         <TableCell className="font-medium">{user.name}</TableCell>
                                         <TableCell>{user.access_rights.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
