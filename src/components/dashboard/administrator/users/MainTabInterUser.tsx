@@ -4,14 +4,6 @@
 import React, { useState } from 'react'
 
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import {
     Pagination,
     PaginationContent,
     PaginationEllipsis,
@@ -35,10 +27,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { getInternalUsers } from '@/api/dashboard/administrator/users/actions';
-import { FiEdit } from "react-icons/fi";
+import { TbLoaderQuarter } from "react-icons/tb";
 
-import { LuMoreHorizontal } from 'react-icons/lu';
-import { RiDeleteBinLine } from "react-icons/ri";
 import { HandleDeleteInternalUser, HandleEditInternalUser } from './ActionModal';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -137,35 +127,39 @@ const MainTabInterUser = () => {
                             Showing <strong>{data?.data?.current_page}</strong> of <strong>{data?.data?.total_pages}</strong> pages
                         </div>
                         <Pagination className="mx-0 w-auto">
-                            <PaginationContent>
-                                {currentPage > 1 && (
+                            {isLoading ? (
+                                <PaginationContent>
                                     <PaginationItem>
-                                        <PaginationPrevious
-                                            href="#"
-                                            onClick={() => handlePageChange(currentPage - 1)}
-                                        />
+                                        <PaginationPrevious href="#" aria-disabled='true' />
                                     </PaginationItem>
-                                )}
+                                    <PaginationItem>
+                                        <svg className="animate-spin h-5 w-5 mx-4" viewBox="0 0 14 14">
+                                            <TbLoaderQuarter />
+                                        </svg>
+                                    </PaginationItem>
+                                    <PaginationItem>
+                                        <PaginationNext href="#" aria-disabled='true' />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            ) : error ? (
 
-                                {/* Adjusted logic for total pages */}
-                                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                                    // Handle cases where total pages is less than 3
-                                    if (totalPages <= 3) {
-                                        return (
-                                            <PaginationItem key={page}>
-                                                <PaginationLink
-                                                    href="#"
-                                                    isActive={page === currentPage}
-                                                    onClick={() => handlePageChange(page)}
-                                                >
-                                                    {page}
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                        );
-                                    }
-                                    // Handle cases where total pages is more than 3
-                                    else {
-                                        if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
+                                <div>Error loading pagination</div>
+                            ) : (
+
+                                <PaginationContent>
+                                    {currentPage > 1 && (
+                                        <PaginationItem>
+                                            <PaginationPrevious
+                                                href="#"
+                                                onClick={() => handlePageChange(currentPage - 1)}
+                                            />
+                                        </PaginationItem>
+                                    )}
+
+                                    {/* Adjusted logic for total pages */}
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                                        // Handle cases where total pages is less than 3
+                                        if (totalPages <= 3) {
                                             return (
                                                 <PaginationItem key={page}>
                                                     <PaginationLink
@@ -177,23 +171,39 @@ const MainTabInterUser = () => {
                                                     </PaginationLink>
                                                 </PaginationItem>
                                             );
-                                        } else if (page === currentPage - 2 || page === currentPage + 2) {
-                                            return <PaginationEllipsis key={page} />;
-                                        } else {
-                                            return null;
                                         }
-                                    }
-                                })}
+                                        // Handle cases where total pages is more than 3
+                                        else {
+                                            if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
+                                                return (
+                                                    <PaginationItem key={page}>
+                                                        <PaginationLink
+                                                            href="#"
+                                                            isActive={page === currentPage}
+                                                            onClick={() => handlePageChange(page)}
+                                                        >
+                                                            {page}
+                                                        </PaginationLink>
+                                                    </PaginationItem>
+                                                );
+                                            } else if (page === currentPage - 2 || page === currentPage + 2) {
+                                                return <PaginationEllipsis key={page} />;
+                                            } else {
+                                                return null;
+                                            }
+                                        }
+                                    })}
 
-                                {currentPage < totalPages && (
-                                    <PaginationItem>
-                                        <PaginationNext
-                                            href="#"
-                                            onClick={() => handlePageChange(currentPage + 1)}
-                                        />
-                                    </PaginationItem>
-                                )}
-                            </PaginationContent>
+                                    {currentPage < totalPages && (
+                                        <PaginationItem>
+                                            <PaginationNext
+                                                href="#"
+                                                onClick={() => handlePageChange(currentPage + 1)}
+                                            />
+                                        </PaginationItem>
+                                    )}
+                                </PaginationContent>
+                            )}
                         </Pagination>
                     </div>
                 </CardFooter>
